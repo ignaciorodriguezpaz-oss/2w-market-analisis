@@ -3,13 +3,14 @@ const V23_VERSION='20261007-model-segment1-segment2';
 let V23_SEGMENTS=null;
 let V23_SEG1=(()=>{try{return localStorage.getItem('2w.v23.segment1')||'ALL'}catch{return 'ALL'}})();
 let V23_SEG2=(()=>{try{return localStorage.getItem('2w.v23.segment2')||'ALL'}catch{return 'ALL'}})();
+const V23_BASE_META=v7fModelMeta;
 
 function v23save(){try{localStorage.setItem('2w.v23.segment1',V23_SEG1);localStorage.setItem('2w.v23.segment2',V23_SEG2);localStorage.removeItem('2w.v13.modelQuery')}catch{}}
 function v23seg(name){
   const r=V23_SEGMENTS?.[String(name||'').toUpperCase()];
   if(r)return {segment1:r[0]||'OTHERS',segment2:r[1]||'OTHERS'};
-  const m=typeof v7fModelMeta==='function'?v7fModelMeta(name):{};
-  return {segment1:'OTHERS',segment2:m?.segment||'OTHERS'};
+  const m=typeof V23_BASE_META==='function'?V23_BASE_META(name):{};
+  return {segment1:'OTHERS',segment2:m?.segment||'SIN CLASIFICAR'};
 }
 function v23segValues(which){
   const vals=new Set();
@@ -34,7 +35,6 @@ v13modelControls=function(){
     <div class="note"><b>Segmentación:</b> Segmento 1 = apertura amplia CUB / LMC / SC / FUN / ATV / Others. Segmento 2 = apertura de producto CUB / Business / On-Off / Sport / Scooter / Fun +300, etc. Podés usar cualquiera de los dos filtros por separado o combinarlos con Marca.</div>`;
 };
 
-const V23_BASE_META=v7fModelMeta;
 v7fModelMeta=function(name){const b=V23_BASE_META(name),s=v23seg(name);return {...b,segment:s.segment2,segment1:s.segment1,segment2:s.segment2}};
 
 const V23_BASE_BIND=bindSingle;
