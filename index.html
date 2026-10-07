@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1017">
-  <meta name="description" content="Argentina Motorcycle Market Intelligence — macro, mercado, forecast y segmentos con trazabilidad completa.">
+  <meta name="description" content="Argentina Motorcycle Intelligence — mercado, competencia, forecast, Honda, producto, importaciones y Safety con trazabilidad.">
   <title>Argentina Motorcycle Intelligence</title>
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/modules.css">
 </head>
 <body>
   <div class="loading" id="loading"><div class="loading-mark">AMI</div><p>Preparando inteligencia de mercado…</p><div class="loading-bar"><i></i></div></div>
@@ -16,18 +17,25 @@
       <nav id="navigation">
         <button data-view="overview" class="active"><i>01</i><span>Resumen ejecutivo</span></button>
         <button data-view="argentina"><i>02</i><span>Argentina hoy</span></button>
-        <button data-view="market"><i>03</i><span>Mercado motos</span></button>
-        <button data-view="forecast"><i>04</i><span>Forecast</span></button>
-        <button data-view="segments"><i>05</i><span>Segmentos</span></button>
-        <button data-view="data"><i>06</i><span>Datos y método</span></button>
+        <button data-view="market"><i>03</i><span>Mercado total</span></button>
+        <button data-view="competition"><i>04</i><span>Competencia</span></button>
+        <button data-view="forecast"><i>05</i><span>Forecast</span></button>
+        <button data-view="segments"><i>06</i><span>Segmentos</span></button>
+        <button data-view="honda"><i>07</i><span>Honda & Commercial</span></button>
+        <button data-view="product"><i>08</i><span>Product Planning</span></button>
+        <button data-view="imports"><i>09</i><span>Importaciones</span></button>
+        <button data-view="intelligence"><i>10</i><span>Radar & señales</span></button>
+        <button data-view="safety"><i>11</i><span>Safety</span></button>
+        <button data-view="reports"><i>12</i><span>Report Center</span></button>
+        <button data-view="data"><i>13</i><span>Datos & método</span></button>
       </nav>
       <div class="side-status"><span class="status-dot"></span><div><b>DATOS GOBERNADOS</b><small id="cutoffSide">Cargando corte…</small></div></div>
     </aside>
     <div class="workspace">
       <header class="topbar">
         <button class="menu" id="menu" aria-label="Abrir menú">☰</button>
-        <div class="breadcrumbs"><span>NUEVA APP · GREENFIELD</span><b id="viewTitle">Resumen ejecutivo</b></div>
-        <div class="top-actions"><span class="freshness" id="freshness">ACTUALIZANDO</span><button id="refresh">↻ Actualizar</button></div>
+        <div class="breadcrumbs"><span>GREENFIELD · DECISION SYSTEM</span><b id="viewTitle">Resumen ejecutivo</b></div>
+        <div class="top-actions"><span class="freshness" id="freshness">ACTUALIZANDO</span><button id="quickReport">▣ Reporte</button><button id="refresh">↻ Actualizar</button></div>
       </header>
       <section class="filters" aria-label="Filtros globales">
         <label><span>PERÍODO</span><select id="periodFilter"><option value="24">Últimos 24 meses</option><option value="48">Últimos 48 meses</option><option value="84">Últimos 7 años</option><option value="all">Histórico completo</option></select></label>
@@ -37,10 +45,14 @@
         <button class="reset" id="resetFilters">Restablecer</button>
       </section>
       <main id="content" tabindex="-1"></main>
-      <footer><span id="footerMeta"></span><span>CAFAM gobierna el total · Pivot gobierna estructura y estacionalidad</span></footer>
+      <footer><span id="footerMeta"></span><span>CAFAM gobierna total · Pivot/AUTOMATIC estructura · Importaciones ≠ patentamientos</span></footer>
     </div>
   </div>
   <div class="tooltip" id="tooltip" hidden></div>
-  <script src="/app.js" defer></script>
+  <script src="/core.js" defer></script>
+  <script src="/views-market.js" defer></script>
+  <script src="/views-planning.js" defer></script>
+  <script src="/patches.js" defer></script>
+  <script src="/runtime.js" defer></script>
 </body>
 </html>

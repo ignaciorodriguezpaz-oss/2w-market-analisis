@@ -1,0 +1,1 @@
+{"version":"greenfield-expansion-2026-10-07","checks":{"seasonality_sum_12":true,"segment_forecast_reconciles":true,"imports_separate_from_registrations":true,"cafam_market_master":true},"notes":"Supplemental metadata for smoke testing."}
