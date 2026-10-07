@@ -1,15 +1,13 @@
 {
-  "version": "2026-10-07-pr6",
+  "version": "2026-10-07-pr6-knee",
   "source": "Honda_Market_FCST_FINAL_2010_2030_PR77.xlsx / UIO & SATURATION",
   "status": "ASSUMPTION + SOURCE MODEL",
   "pr_target": 6,
   "saturation_per_1000": 166.6666666667,
-  "headroom_capture": 0.06,
   "population_growth": 0.0009,
   "initial_uio_end_2025_26": 3984899.029966579,
   "initial_population_2026_27": 46252277.46141123,
-  "logic": "PR = Population / UIO. PR 6 implies 166.7 motorcycles in use per 1,000 inhabitants. Structural annual flow = expected cohort deaths + 6% of remaining UIO headroom. The structural flow is blended with the unconstrained forecast with increasing weight by horizon; current KI remains driven by actuals and short-term forecast.",
-  "blend_lambda": 0.35,
+  "logic": "PR = Population / UIO. PR 6 is the saturation knee, not an early brake. Before the unconstrained forecast reaches PR 6, UIO does not reduce market volume. In the KI where the unconstrained path reaches/crosses PR 6, the curve bends to the volume required to reach saturation. After saturation, sustainable demand converges toward expected cohort replacement plus population-driven expansion.",
   "years": {
     "2026/27": {"population": 46252277.46141123, "source_uio_start": 3984899.029966579, "expected_deaths": 523398.5453754938},
     "2027/28": {"population": 46293904.5111265, "source_uio_start": 4396552.699806788, "expected_deaths": 538639.2458212255},
@@ -19,9 +17,10 @@
   },
   "governance": [
     "UIO is a stock of motorcycles in use, not registrations.",
-    "Replacement demand is driven by cohort retirements; expansion demand is constrained by remaining headroom to PR 6.",
+    "Replacement demand is driven by cohort retirements; expansion is unconstrained by PR until the free trajectory reaches PR 6.",
     "PR 6 is an explicit planning assumption and must be visible in methodology.",
     "The current closed actuals are never modified by the saturation layer.",
-    "The saturation layer bends the multi-year KI forecast; it does not mechanically cap an individual month."
+    "Macro, affordability, credit or momentum may reduce the free forecast before PR 6; saturation itself may not.",
+    "After the PR 6 knee, the long-run market converges toward cohort replacement plus population-driven expansion."
   ]
 }
