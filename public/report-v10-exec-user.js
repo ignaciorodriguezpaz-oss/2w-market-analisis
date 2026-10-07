@@ -6,9 +6,6 @@ function v10monthLabel(period){
   const names=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   return `${names[(Number(m)||1)-1]||period}-${String(y||'').slice(-2)}`;
 }
-function v10signed(n){
-  const x=Math.round(Number(n)||0);return `${x>0?'+':''}${fmt(x)}`;
-}
 function v10scenarioRows(){
   const ki=v3currentKI(),e=v8effectivePlan(),a=e.active,f=DATA.forecast?.rows?.[0]||{};
   return [
@@ -20,7 +17,7 @@ function v10scenarioRows(){
 }
 function v10scenarioTable(){
   const rows=v10scenarioRows();
-  return `<section class="card"><div class="card-head"><div><span class="eyebrow">4 SCENARIOS · MARKET</span><h2>Down / Base / Up / User</h2><p>Misma lectura, sin mezclar el forecast independiente con el objetivo User.</p></div>${badge('USER ≠ FCST','purple')}</div><div class="table-wrap"><table class="table"><thead><tr><th>Escenario</th><th>Mes abierto</th><th>KI 26/27</th><th>Lectura</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${badge(r.name.toUpperCase(),r.tone)}</td><td><strong>${fmt(r.month)}</strong></td><td><strong>${fmt(r.ki)}</strong></td><td><small>${r.note}</small></td></tr>`).join('')}</tbody></table></div></section>`;
+  return `<section class="card"><div class="card-head"><div><span class="eyebrow">4 SCENARIOS · MARKET</span><h2>Down / Base / Up / User</h2><p>Mes abierto y KI completo en la misma lectura. User se compara contra el forecast independiente pero no lo modifica.</p></div>${badge('USER ≠ FCST','purple')}</div><div class="table-wrap"><table class="table"><thead><tr><th>Escenario</th><th>Mes abierto</th><th>KI 26/27</th><th>Lectura</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${badge(r.name.toUpperCase(),r.tone)}</td><td><strong>${fmt(r.month)}</strong></td><td><strong>${fmt(r.ki)}</strong></td><td><small>${r.note}</small></td></tr>`).join('')}</tbody></table></div></section>`;
 }
 
 exec=function(){
@@ -39,7 +36,6 @@ exec=function(){
 };
 
 function v10userMonthlyRows(){
-  const e=v8effectivePlan(),active=e.active;
   const periods=['2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12','2027-01','2027-02','2027-03'];
   const mh=new Map((DATA.market_history||[]).map(r=>[r.period,Number(r.value)||0]));
   const hh=new Map((DATA.honda?.history||[]).map(r=>[r.period,Number(r.honda)||0]));
@@ -64,17 +60,16 @@ function v10userMonthlyTable(){
 function v10userGapKpis(){
   const e=v8effectivePlan(),a=e.active,d=v5dailyStats(),closedM=v3actualMarketKI(),closedH=v3actualHondaKI(),mtd=d?.currentMtd||0;
   const observedM=closedM+mtd,remainM=Math.max(0,a.market-observedM),remainH=Math.max(0,a.honda-closedH);
-  const rows=v10userMonthlyRows(),futureM=v3sum(rows.filter(r=>r.period>='2026-10').map(r=>r.marketPlan)),futureH=v3sum(rows.filter(r=>r.period>='2026-10').map(r=>r.hondaPlan));
-  return `<section class="kpis">${kpi('PLAN MARKET KI',fmt(a.market),`${v9stageMeta(e.activeKey).label} vigente`,V3_PURPLE,'USER')}${kpi('OBSERVADO MKT',fmt(observedM),`Abr–Sep + Oct MTD ${fmt(mtd)}`,COLORS.actual,'FACT/MTD')}${kpi('GAP MARKET KI',fmt(remainM),`${pct(remainM,a.market)} del plan`,COLORS.amber,'TO DELIVER')}${kpi('PLAN HONDA KI',fmt(a.honda),`MS ${pct(a.share)}`,COLORS.red,'USER')}${kpi('ACTUAL HONDA',fmt(closedH),'Abr–Sep cerrado',COLORS.red,'FACT')}${kpi('GAP HONDA KI',fmt(remainH),'Honda Daily Oct no cargado',COLORS.amber,'TO DELIVER')}</section>`;
+  return `<section class="kpis">${kpi('PLAN MARKET KI',fmt(a.market),`${v9stageMeta(e.activeKey).label} vigente`,V3_PURPLE,'USER')}${kpi('OBSERVADO MKT',fmt(observedM),`Abr–Sep + Oct MTD ${fmt(mtd)}`,COLORS.actual,'FACT/MTD')}${kpi('GAP MARKET KI',fmt(remainM),`${pct(a.market?remainM/a.market:null)} del plan`,COLORS.amber,'TO DELIVER')}${kpi('PLAN HONDA KI',fmt(a.honda),`MS ${pct(a.share)}`,COLORS.red,'USER')}${kpi('ACTUAL HONDA',fmt(closedH),'Abr–Sep cerrado',COLORS.red,'FACT')}${kpi('GAP HONDA KI',fmt(remainH),'Honda Daily Oct no cargado',COLORS.amber,'TO DELIVER')}</section>`;
 }
 
 userBlock=function(){
-  const e=v8effectivePlan(),a=e.active,fit=v3planFit(),meta=v9stageMeta(e.activeKey);
-  return chapter('user','07','Plan User','Hoja independiente para cargar Mercado/Honda y seguir el gap mes a mes del KI. El forecast independiente permanece fuera de esta hoja salvo como referencia comparativa.',`${v9quarterCalendar()}${v10userGapKpis()}<div class="v8-help"><b>Cómo leerla:</b><span>Abr–Sep queda como Result bloqueado. Oct muestra MTD actual contra el User mensual. Nov–Mar muestra el plan a ejecutar. Cambiar Mercado/Honda modifica solamente la trayectoria User; Down/Base/Up no cambian.</span></div>${v8editorTable()}<div class="v8-actions"><button id="v8ApplyPlan">Guardar y recalcular</button><button id="v8ClearPlan" class="secondary">Vaciar inputs y volver a FCST</button></div>${v10userMonthlyTable()}${card('Trayectoria User plurianual','Único gráfico de Plan User: KI vigente + próximos OB contra el forecast independiente.',v8planCharts(),'USER SHEET')}<div class="note"><b>Gap:</b> para Mercado se descuenta también el MTD de octubre. Para Honda el gap descuenta únicamente resultados cerrados porque el Daily Honda de octubre no está cargado en la base actual.</div>`);
+  const e=v8effectivePlan();
+  return chapter('user','07','Plan User','Hoja independiente para cargar Mercado/Honda y seguir el gap mes a mes del KI. El forecast independiente permanece separado y se usa solo como referencia comparativa.',`${v9quarterCalendar()}${v10userGapKpis()}<div class="v8-help"><b>Cómo leerla:</b><span>Abr–Sep queda como Result bloqueado. Oct muestra MTD actual contra el User mensual. Nov–Mar muestra el plan a ejecutar. Cambiar Mercado/Honda modifica solamente la trayectoria User; Down/Base/Up no cambian.</span></div>${v8editorTable()}<div class="v8-actions"><button id="v8ApplyPlan">Guardar y recalcular</button><button id="v8ClearPlan" class="secondary">Vaciar inputs y volver a FCST</button></div>${v10userMonthlyTable()}${v8planCharts()}<div class="note"><b>Gap:</b> para Mercado se descuenta también el MTD de octubre. Para Honda el gap descuenta únicamente resultados cerrados porque el Daily Honda de octubre no está cargado en la base actual.</div>`);
 };
 
 planning=function(){
-  const e=v8effectivePlan(),a=e.active,ind=e.ind[0],meta=v9stageMeta(e.activeKey),actualH=v3actualHondaKI(),actualM=v3actualMarketKI();
+  const e=v8effectivePlan(),ind=e.ind[0],meta=v9stageMeta(e.activeKey),actualH=v3actualHondaKI(),actualM=v3actualMarketKI();
   return chapter('planning','08','Honda Planning · KI / Budget / OB','Lectura corporativa del calendario Honda y sus revisiones. La edición, los gaps mensuales y los gráficos del User Plan viven solamente en la hoja Plan User.',`${v9quarterCalendar()}<section class="kpis">${kpi('ACTUAL KI MARKET',fmt(actualM),'Abr–Sep cerrado',COLORS.actual,'FACT')}${kpi('ACTUAL KI HONDA',fmt(actualH),'Abr–Sep cerrado',COLORS.red,'FACT')}${kpi('FCST MARKET BASE',fmt(ind.base),`Down ${fmt(ind.down)} · Up ${fmt(ind.up)}`,COLORS.blue,'INDEPENDENT FCST')}${kpi('FCST HONDA BASE',fmt(ind.hondaBase),`MS ${pct(ind.hondaShare)}`,COLORS.red,'INDEPENDENT FCST')}${kpi('REVISIÓN VIGENTE',meta.label,`${meta.result} → ${meta.plan}`,V3_PURPLE,'PLAN VERSION')}</section>${card('Revisiones del KI actual',`${meta.label} vigente según el último quarter cerrado. Sin duplicar gráficos del Plan User.`,v9stageStrip(e),'BUDGET / QUARTER FORECAST HISTORY')}<div class="note"><b>Separación de funciones:</b> Honda Planning muestra historia de revisiones y referencia independiente. Toda carga User, gap mensual y trayectoria User se concentra en la hoja <b>Plan User</b>.</div>`);
 };
 
