@@ -1,6 +1,6 @@
-/* 2W Market Analysis v22 — monthly budget performance vs actual inside Plan User */
-const V22_VERSION='20261007-budget-performance';
-const V22_BASE_USER_SHEET=v12userSheet;
+/* 2W Market Analysis v22B — monthly budget performance vs actual inside Plan User */
+const V22B_VERSION='20261007-budget-performance-fixed';
+const V22B_BASE_USER_SHEET=v12userSheet;
 
 function v22stageSeries(field){
   return Object.fromEntries(V8_STAGE_KEYS.map(s=>[s,v12monthlyEffective(s,field)]));
@@ -34,17 +34,16 @@ function v22budgetPerformanceBlock(){
   const market=v22revisionRows('market'),honda=v22revisionRows('honda');
   const mNow=V8_STAGE_KEYS.map(s=>v22performance('market',s)).filter(x=>x.n).at(-1);
   const hNow=V8_STAGE_KEYS.map(s=>v22performance('honda',s)).filter(x=>x.n).at(-1);
-  return `<section class="card v22-budget-performance"><div class="card-head"><div><span class="eyebrow">BUDGET PERFORMANCE · PLAN vs REAL</span><h2>Cómo rindió cada presupuesto</h2><p>Cada línea conserva la versión PRB / 1Q / 2Q / 3Q. El Real se superpone mes a mes; cuando cambia la revisión se ve el salto del nuevo presupuesto y cómo quedó contra el resultado.</p></div>${badge('MONTHLY TRACKING','green')}</div>
+  return `<section class="card v22-budget-performance"><div class="card-head"><div><span class="eyebrow">BUDGET PERFORMANCE · PLAN vs REAL</span><h2>Cómo rindió cada presupuesto</h2><p>Cada línea conserva la versión PRB / 1Q / 2Q / 3Q. El Real se superpone mes a mes.</p></div>${badge('MONTHLY TRACKING','green')}</div>
   <section class="kpis">${kpi('ÚLTIMA REVISIÓN EVALUABLE',mNow?V8_STAGE_LABELS[mNow.stage]:'PENDING',mNow?`${mNow.n} meses con real`:'sin meses posteriores',V3_PURPLE,'BUDGET')}${kpi('ERROR MKT',mNow?pct(mNow.bias):'—',mNow?`MAPE ${pct(mNow.mape)}`:'',COLORS.amber,'PLAN vs REAL')}${kpi('ERROR HONDA',hNow?pct(hNow.bias):'—',hNow?`MAPE ${pct(hNow.mape)}`:'',COLORS.red,'PLAN vs REAL')}</section>
-  <div class="grid two">${card('Mercado · presupuestos vs Real','Abr–Mar. Las revisiones posteriores incorporan resultados cerrados y recalculan el tramo todavía abierto.',lineChart(market,[{key:'actual',name:'Real',color:COLORS.actual},{key:'prb',name:'PRB',color:COLORS.previous},{key:'q1',name:'1Q FCST',color:COLORS.blue},{key:'q2',name:'2Q FCST',color:V3_PURPLE},{key:'q3',name:'3Q FCST',color:COLORS.amber}],{zero:true}),'PLAN / ACTUAL')}${card('Honda · presupuestos vs Real','Misma lectura para volumen Honda.',lineChart(honda,[{key:'actual',name:'Real Honda',color:COLORS.red},{key:'prb',name:'PRB',color:COLORS.previous},{key:'q1',name:'1Q FCST',color:COLORS.blue},{key:'q2',name:'2Q FCST',color:V3_PURPLE},{key:'q3',name:'3Q FCST',color:COLORS.amber}],{zero:true}),'PLAN / ACTUAL')}</div>
-  <div class="grid two">${card('Performance Mercado','El error se mide sólo en meses que eran futuros al momento de emitir esa revisión.',v22performanceTable('market'),'BUDGET ACCURACY')}${card('Performance Honda','No se evalúan como forecast los meses que ya eran Result dentro de la revisión.',v22performanceTable('honda'),'BUDGET ACCURACY')}</div>
-  <div class="note"><b>Lectura:</b> PRB se evalúa contra los reales desde abril; 1Q FCST contra los reales desde julio; 2Q FCST empezará a acumular error cuando cierre octubre; 3Q FCST desde enero. Así no mezclamos un Result conocido con la precisión del presupuesto.</div></section>`;
+  <div class="grid two">${card('Mercado · presupuestos vs Real','Abr–Mar.',lineChart(market,[{key:'actual',name:'Real',color:COLORS.actual},{key:'prb',name:'PRB',color:COLORS.previous},{key:'q1',name:'1Q FCST',color:COLORS.blue},{key:'q2',name:'2Q FCST',color:V3_PURPLE},{key:'q3',name:'3Q FCST',color:COLORS.amber}],{zero:true}),'PLAN / ACTUAL')}${card('Honda · presupuestos vs Real','Misma lectura para volumen Honda.',lineChart(honda,[{key:'actual',name:'Real Honda',color:COLORS.red},{key:'prb',name:'PRB',color:COLORS.previous},{key:'q1',name:'1Q FCST',color:COLORS.blue},{key:'q2',name:'2Q FCST',color:V3_PURPLE},{key:'q3',name:'3Q FCST',color:COLORS.amber}],{zero:true}),'PLAN / ACTUAL')}</div>
+  <div class="grid two">${card('Performance Mercado','Error sólo en meses futuros al emitir la revisión.',v22performanceTable('market'),'BUDGET ACCURACY')}${card('Performance Honda','No se evalúan meses ya conocidos.',v22performanceTable('honda'),'BUDGET ACCURACY')}</div></section>`;
 }
 
 v12userSheet=function(){
-  const html=V22_BASE_USER_SHEET();
+  const html=V22B_BASE_USER_SHEET();
   const marker='<div class="note"><b>Separación:</b>';
   return html.includes(marker)?html.replace(marker,`${v22budgetPerformanceBlock()}${marker}`):`${html}${v22budgetPerformanceBlock()}`;
 };
 
-(function v22boot(){const ready=()=>{if(typeof DATA!=='undefined'&&DATA&&typeof v12monthlyEffective==='function'){render()}else setTimeout(ready,100)};ready()})();
+(function v22bboot(){const ready=()=>{if(typeof DATA!=='undefined'&&DATA&&typeof v12monthlyEffective==='function'){render()}else setTimeout(ready,100)};ready()})();
