@@ -1,5 +1,5 @@
 /* 2W Market Analysis v15 — Plan User inheritance: blank = previous plan */
-const V15_VERSION='20261007-plan-inheritance';
+const V15_VERSION='20261007-plan-inheritance-fix-active-stage';
 const V15_BASE_USERBLOCK=userBlock;
 
 v8effectivePlan=function(){
@@ -47,7 +47,11 @@ v8effectivePlan=function(){
     };
   });
 
-  return {ind,stages,future,active:stages.at(-1),all:[...stages,...future]};
+  // Preserve the Honda Apr–Mar quarter logic introduced in v9.
+  // At the current Sep-26 close, 2Q FCST is the active revision.
+  const activeKey=typeof v9activeStageKey==='function'?v9activeStageKey():'3QFCST';
+  const active=stages.find(x=>x.id===activeKey)||stages.at(-1);
+  return {ind,stages,future,active,activeKey,all:[...stages,...future]};
 };
 
 userBlock=function(){
