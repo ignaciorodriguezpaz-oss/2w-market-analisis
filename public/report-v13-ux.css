@@ -1,0 +1,41 @@
+/* 2W Market Analysis v13 — readable Plan User + contextual filters */
+/* Global filters were misleading because most chapters did not consume them. Keep DOM for legacy JS, but remove from UI. */
+.filters{display:none!important}
+
+/* Plan User: force high-contrast tables regardless of OS/browser color scheme. */
+.v12-user-page .table-wrap{background:#fff!important;border:1px solid #d7dee8!important;border-radius:12px!important;box-shadow:0 1px 2px rgba(15,23,42,.05);overflow:auto}
+.v12-user-page .table{color:#17202b!important;background:#fff!important}
+.v12-user-page .table th{background:#202a36!important;color:#fff!important;font-size:12px!important;font-weight:800!important;letter-spacing:.02em!important;border-color:#3b4654!important;padding:11px 10px!important;white-space:nowrap}
+.v12-user-page .table td{background:#fff!important;color:#17202b!important;font-size:14px!important;font-weight:650!important;border-color:#e2e7ee!important;padding:11px 10px!important}
+.v12-user-page .table td strong,.v12-user-page .table td b{color:inherit!important;font-weight:850!important}
+.v12-user-page .table small{display:block!important;color:#5b6675!important;opacity:1!important;font-size:10px!important;font-weight:750!important;line-height:1.25!important;margin-top:5px!important;white-space:nowrap}
+.v12-user-page .v12-month-grid td:first-child,.v12-user-page .v12-month-grid th:first-child,.v12-user-page .v12-version-table td:first-child,.v12-user-page .v12-version-table th:first-child,.v12-user-page .v8-plan-table td:first-child,.v12-user-page .v8-plan-table th:first-child{background:#202a36!important;color:#fff!important;position:sticky!important;left:0!important;z-index:3!important}
+.v12-user-page .table td:first-child small{color:#d4dbe4!important}
+.v12-user-page .v12-result-cell{background:#edf8f1!important;color:#0d5528!important}
+.v12-user-page .v12-user-cell{background:#f3efff!important;color:#432080!important}
+.v12-user-page input,.v12-user-page select{background:#fff!important;color:#111827!important;border:1px solid #94a3b8!important;font-weight:800!important;font-size:14px!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.v12-user-page input::placeholder{color:#7b8795!important;opacity:1!important;font-weight:650!important}
+.v12-user-page .v12-stage-tabs button{background:#f3f5f8!important;color:#253142!important;border-color:#cbd5e1!important;font-weight:800!important}
+.v12-user-page .v12-stage-tabs button.active{background:#7c3aed!important;color:#fff!important;border-color:#7c3aed!important}
+.v12-user-page .v8-help,.v12-user-page .note,.v12-user-page .v12-actions span{color:#445064!important}
+
+/* Contextual controls live next to the chart/report they actually affect. */
+.v13-local-controls{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:10px 12px;border:1px solid var(--line,rgba(127,140,155,.22));border-radius:12px;background:rgba(127,140,155,.055)}
+.v13-local-controls>span{font-size:10px;font-weight:850;letter-spacing:.11em;text-transform:uppercase;opacity:.62;margin-right:2px;align-self:center}
+.v13-local-controls button{border:1px solid rgba(127,140,155,.26);background:transparent;color:inherit;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:800;cursor:pointer}
+.v13-local-controls button.active{background:#253142;color:#fff;border-color:#253142}
+.v13-local-controls label{display:flex;flex-direction:column;gap:4px;min-width:150px}
+.v13-local-controls label span{font-size:9px;font-weight:850;letter-spacing:.1em;opacity:.58}
+.v13-local-controls select,.v13-local-controls input{min-height:34px;border:1px solid rgba(127,140,155,.34);border-radius:9px;background:var(--surface,#fff);color:inherit;padding:6px 9px;font:inherit;font-size:12px;font-weight:700}
+.v13-local-controls input{min-width:220px}
+.v13-universe{margin-left:auto;align-self:center;display:flex;gap:7px;align-items:baseline;padding:5px 7px}
+.v13-universe b{font-size:18px}.v13-universe small{font-size:10px;opacity:.58;text-transform:uppercase;letter-spacing:.08em}
+.v13-model-block .table-wrap{max-height:660px;overflow:auto}
+.v13-model-block .table th{position:sticky;top:0;z-index:2}
+.v13-model-block .v4-rank td:nth-child(2){min-width:220px}
+.v13-source-note{font-size:11px;opacity:.68;margin:9px 0 0}
+
+@media(max-width:800px){
+  .v12-user-page .table th{font-size:11px!important}.v12-user-page .table td{font-size:12px!important}
+  .v13-local-controls{align-items:stretch}.v13-local-controls label,.v13-local-controls input{min-width:100%;width:100%}.v13-universe{margin-left:0}
+}
