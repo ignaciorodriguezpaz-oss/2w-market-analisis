@@ -65,5 +65,14 @@ forecast=function(){return `${V14_BASE_FORECAST()}${v14uioBlock()}`};
 
 fetch(`/data/uio-saturation-pr6.json?v=${V14_VERSION}`,{cache:'no-store'})
   .then(r=>r.ok?r.json():Promise.reject(new Error(`UIO PR6 HTTP ${r.status}`)))
-  .then(x=>{V14_UIO=x;const ready=()=>{if(typeof DATA!=='undefined'&&DATA){render()}else setTimeout(ready,100)};ready()})
+  .then(x=>{
+    V14_UIO=x;
+    if(typeof V7_MODEL!=='undefined'&&V7_MODEL?.saturation){
+      V7_MODEL.saturation.selected_pr=Number(x.pr_target)||6;
+      V7_MODEL.saturation.soft_brake_start_per_1000=Number(x.saturation_per_1000)||166.6666666667;
+      V7_MODEL.saturation.reference_maturity_per_1000=Number(x.saturation_per_1000)||166.6666666667;
+      V7_MODEL.saturation.rule='Active live assumption: PR 6. UIO cohorts define replacement; remaining population/UIO headroom defines expansion; structural weight increases with forecast horizon.';
+    }
+    const ready=()=>{if(typeof DATA!=='undefined'&&DATA){render()}else setTimeout(ready,100)};ready();
+  })
   .catch(err=>console.error('UIO saturation layer unavailable',err));
