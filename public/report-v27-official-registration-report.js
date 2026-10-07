@@ -4,7 +4,7 @@ let V27_OFFICIAL=null;
 
 function v27pct(a,b){return b?Number(a)/Number(b)-1:null}
 function v27officialMap(){
-  if(!window.V24_PIVOT||!Array.isArray(V24_PIVOT.periods)||!Array.isArray(V24_PIVOT.market_total_raw))return new Map();
+  if(typeof V24_PIVOT==='undefined'||!V24_PIVOT||!Array.isArray(V24_PIVOT.periods)||!Array.isArray(V24_PIVOT.market_total_raw))return new Map();
   return new Map(V24_PIVOT.periods.map((p,i)=>[p,Number(V24_PIVOT.market_total_raw[i])||0]).filter(([,v])=>v>0));
 }
 function v27sameMonthPrevYear(period){
@@ -12,7 +12,7 @@ function v27sameMonthPrevYear(period){
   return y&&m?`${Number(y)-1}-${m}`:null;
 }
 function v27applyOfficialReport(){
-  if(typeof DATA==='undefined'||!DATA||!window.V24_PIVOT)return false;
+  if(typeof DATA==='undefined'||!DATA||typeof V24_PIVOT==='undefined'||!V24_PIVOT)return false;
   const map=v27officialMap();
   if(!map.size)return false;
 
