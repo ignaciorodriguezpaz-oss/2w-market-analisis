@@ -1,0 +1,13 @@
+{
+  "source": "CAFAM",
+  "source_url": "https://cafam.org.ar/patentamientos-new/",
+  "priority": 2,
+  "mode": "latest_official_close",
+  "period": "2026-09",
+  "cutoff": "2026-09-30",
+  "value": 80641,
+  "ytd": 672710,
+  "status": "FACT",
+  "updated_at": "2026-10-07T14:34:00-03:00",
+  "note": "Fallback oficial cuando SIOMAA no está disponible. CAFAM gobierna el mercado total; no se presenta como daily si no publica apertura comparable."
+}
