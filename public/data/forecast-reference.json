@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "source_workbook": "Honda_Market_FCST_FINAL_2010_2030_PR77(4).xlsx",
+    "source_presentation": "Market explanation.pptx",
+    "imports_source": "Importaciones & Patentamientos(2).xlsx",
+    "reference_date": "2026-10-07",
+    "purpose": "Preserve the user's forecast theory, controls and reverse-calculation logic as an explicit reference layer for the live 2W model. Live actuals remain governed by SIOMAA/CAFAM and Pivot/Registrations."
+  },
+  "regression": {
+    "equation": "Market = 48619.1747 + 4.36829 × Salary(T-3) - 8.39463 × FX(T-3) - 1032.65858 × InterestRate(T-3)",
+    "intercept": 48619.17468370643,
+    "salary_coef": 4.368287949813049,
+    "fx_coef": -8.394626185706152,
+    "rate_coef": -1032.658577869131,
+    "lag_months": 3,
+    "r2": 0.8215446024835685,
+    "adjusted_r2": 0.8066733193571992,
+    "standard_error": 5952.277724738534,
+    "observations": 40,
+    "engine": [
+      "Regression base",
+      "Base minus standard error",
+      "Base plus standard error",
+      "Three dynamic momentum paths",
+      "Average of six paths"
+    ]
+  },
+  "validation": {
+    "new_mape": 0.1541984133779837,
+    "new_bias": 0.0084,
+    "n5_mape": 0.2580394347474031,
+    "n5_bias": -0.13,
+    "note": "BACKTEST sheet metrics. The presentation conclusion also displays a later 10.43% MAPE figure; preserve both as source-version history rather than silently merging them."
+  },
+  "calibration": {
+    "live_workbook_multiplier": 1.0023936622663687,
+    "dedicated_calibration_sheet_multiplier": 1.0058389611631158,
+    "legacy_multiplier": 0.98,
+    "live_formula_source": "SCENARIO ASSUMPTIONS!C6 -> FCST COMPLETE column O",
+    "dedicated_formula_source": "CALIBRATION!C4",
+    "status": "CONTROL DISCREPANCY",
+    "rule": "Recalibrate only when new actual months are added; do not tune to future months.",
+    "note": "FCST COMPLETE currently uses 1.0023936623, while the dedicated CALIBRATION sheet and the presentation describe approximately 1.00584."
+  },
+  "seasonality": {
+    "calendar": "KI Apr-Mar",
+    "seasonality_strength": 0.95,
+    "mom_shape_strength": 0.5,
+    "user_input": [8, 8, 7.1, 7.9, 8.5, 8.6, 8.9, 8.6, 7.9, 9.8, 7.8, 9],
+    "months": ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+    "final_profile": [0.9039727222266273, 0.9515502339227656, 0.7980532868130995, 0.9913369280786615, 1.051463008484656, 1.028031083974308, 1.079771627943859, 1.002458171437634, 0.9020696217587819, 1.305526920942035, 0.8349853302672268, 1.150781064150345],
+    "remaining_ki_26_27_weights": {
+      "2026-10": 0.1720589071473248,
+      "2026-11": 0.1597392013039935,
+      "2026-12": 0.143742537101268,
+      "2027-01": 0.208032448209852,
+      "2027-02": 0.1330528231079775,
+      "2027-03": 0.1833740831295843
+    },
+    "rule": "Seasonality changes monthly shape without changing the KI total. Historical MoM shape is separate from dynamic forecast momentum to prevent recursive double counting."
+  },
+  "reverse_calculator": {
+    "base_reference_ki_26_27": 935052.2152157025,
+    "conservative_factor": 0.9,
+    "upside_factor": 1.1,
+    "reference_custom_target": 762500,
+    "logic": "Select an annual KI total, normalize the KI seasonality profile to weights summing to 1, then reverse-calculate monthly market. In the live app, closed actual months are locked and only the remaining KI target is distributed over future months."
+  },
+  "affordability": {
+    "weight": 0.25,
+    "lag_months": 3,
+    "basket": ["Honda Wave", "Gilera Smash", "Keller", "Motomel B110", "Corven"],
+    "income_reference": "RIPTE",
+    "logic": "Representative CUB basket / salary. Price rising faster than salary worsens affordability; salary rising faster than price improves it."
+  },
+  "saturation": {
+    "selected_pr": 7.7,
+    "population_base": 46044703,
+    "population_growth": 0.0009,
+    "cohort_mortality": 0.10,
+    "mortality_step_months": 18,
+    "soft_brake_start_per_1000": 129.9,
+    "reference_maturity_per_1000": 200,
+    "max_soft_penalty": 0.18,
+    "rule": "UIO is carried by cohorts with mortality. PR is a forward structural control, not a monthly demand substitute."
+  },
+  "event_controls": {
+    "2027_presidential": {
+      "2027-08": 0.99,
+      "2027-09": 0.95,
+      "2027-10": 0.86,
+      "2027-11": 0.93,
+      "2027-12": 1.05,
+      "2028-01": 1.03
+    },
+    "2029_legislative": {
+      "2029-09": 0.99,
+      "2029-10": 0.96,
+      "2029-11": 1.01
+    },
+    "note": "Political factors are temporary scenario assumptions, not facts."
+  },
+  "reference_ki": {
+    "2025/26": 718905,
+    "2026/27": 935052.2152157025,
+    "2027/28": 1000910.402756488,
+    "2028/29": 1091917.392523121,
+    "2029/30": 1121185.84667245,
+    "2030/31": 1140542.017753896
+  },
+  "imports_reference": {
+    "cutoff": "2026-07-31",
+    "jan_jul_total": 459541,
+    "jul_volume": 77300,
+    "jul_vs_jun": 0.2832218330317569,
+    "jul_vs_jan_jun_average": 0.2133706221990839,
+    "presentation_apr_jul_yoy": -0.22,
+    "governance": "Imports are a supply/availability leading indicator. Never add imports to registrations and never treat them as demand one-for-one.",
+    "forecast_use": "Use import contraction/acceleration as a scenario trigger only when confirmed by stock, registrations and model-level conversion."
+  }
+}
