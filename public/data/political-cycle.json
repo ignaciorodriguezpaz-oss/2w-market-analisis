@@ -1,0 +1,38 @@
+{
+  "version": "2026-10-07-political-cycle-v1",
+  "status": "ASSUMPTION",
+  "country": "Argentina",
+  "legal_basis": "Codigo Electoral Nacional Art. 53: national elections are held on the fourth Sunday of October before mandates end.",
+  "source_url": "https://www.argentina.gob.ar/normativa/nacional/ley-19945-19442/actualizacion",
+  "governance": "Political factors are scenario assumptions. They may soften near-term demand through wait-and-see/speculation, but never overwrite actuals and never act as a permanent structural brake.",
+  "presidential": {
+    "year": 2027,
+    "label": "Presidential election cycle",
+    "monthly_factors": {
+      "2027-08": 0.995,
+      "2027-09": 0.985,
+      "2027-10": 0.960,
+      "2027-11": 0.980,
+      "2027-12": 1.005,
+      "2028-01": 1.005
+    },
+    "interpretation": "Mild pre-election postponement/speculation, strongest around October, followed by partial normalization."
+  },
+  "legislative": {
+    "year": 2029,
+    "label": "Mid-term election cycle",
+    "monthly_factors": {
+      "2029-09": 0.995,
+      "2029-10": 0.985,
+      "2029-11": 0.995,
+      "2029-12": 1.002
+    },
+    "interpretation": "Smaller wait-and-see effect than a presidential election."
+  },
+  "limits": {
+    "max_presidential_monthly_drag": 0.04,
+    "max_legislative_monthly_drag": 0.015,
+    "annual_ki_effect_is_weighted_by_month": true,
+    "actuals_locked": true
+  }
+}
