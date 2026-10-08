@@ -1,0 +1,37 @@
+.sidebar nav button{position:relative;overflow:hidden}
+.sidebar nav button.viewing{
+  background:linear-gradient(90deg,rgba(224,24,45,.18),rgba(255,255,255,.065));
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.075),0 8px 24px rgba(0,0,0,.12);
+  transform:translateX(2px);
+}
+.sidebar nav button.viewing::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:7px;
+  bottom:7px;
+  width:3px;
+  border-radius:0 6px 6px 0;
+  background:var(--red);
+  box-shadow:0 0 14px rgba(224,24,45,.45);
+}
+.sidebar nav button.viewing i{
+  color:#fff;
+  background:var(--red);
+  border-radius:7px;
+  width:24px;
+  height:22px;
+  display:grid;
+  place-items:center;
+  box-shadow:0 4px 12px rgba(224,24,45,.22);
+}
+.sidebar nav button.viewing span{font-weight:900;letter-spacing:.005em}
+.sidebar nav button:not(.viewing){opacity:.78}
+.sidebar nav button:not(.viewing):hover{opacity:1}
+.sidebar nav button,.sidebar nav button i,.sidebar nav button span{transition:background .2s ease,color .2s ease,opacity .2s ease,transform .2s ease,box-shadow .2s ease}
+@media(max-width:760px){
+  .sidebar nav button.viewing{background:linear-gradient(90deg,rgba(224,24,45,.24),rgba(255,255,255,.08));transform:none}
+  .sidebar nav button.viewing::before{top:5px;bottom:5px;width:4px}
+}
+@media(prefers-reduced-motion:reduce){.sidebar nav button,.sidebar nav button i,.sidebar nav button span{transition:none}}
