@@ -1,12 +1,63 @@
-/* v56 · load the governed Excel Data Hub into the live /public report */
+/* v60 · Excel Data Hub as an independent app sheet, never a report chapter */
 (()=>{
 const DATA_HUB_SRC='https://cdn.jsdelivr.net/gh/ignaciorodriguezpaz-oss/2w-market-analisis@342bdf04869fac486a0ee703911330a64c61f291/data-hub.js';
 const XLSX_SRC='https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
-let loading=false;
+let loading=false,reportScroll=0;
 function exposeData(){try{if(!Object.getOwnPropertyDescriptor(window,'DATA'))Object.defineProperty(window,'DATA',{configurable:true,get:()=>DATA})}catch{}}
-function addUploadAction(){if(document.getElementById('v56UploadExcel'))return;const actions=document.querySelector('.top-actions');if(!actions)return;const b=document.createElement('button');b.id='v56UploadExcel';b.type='button';b.className='v56-upload-action';b.innerHTML='<span>⇧</span> Cargar Excel';b.title='Subir Excel y actualizar la base de la app';b.addEventListener('click',()=>{const hub=document.getElementById('datahub');if(hub){hub.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.getElementById('dataHubFile')?.click(),450)}else{document.getElementById('method')?.scrollIntoView({behavior:'smooth',block:'start'})}});actions.prepend(b)}
-function relocate(){const hub=document.getElementById('datahub'),method=document.getElementById('method');if(hub&&method&&hub.parentElement!==method){method.appendChild(hub)}const b=document.querySelector('#navigation [data-anchor="datahub"]');if(b){const s=b.querySelector('span');if(s)s.textContent='Cargar archivos · Excel';const i=b.querySelector('i');if(i)i.textContent='11';b.title='Subir Excel para actualizar Daily, Importaciones, Pivot o Master'}const badge=document.querySelector('.v53-build');if(badge)badge.textContent='UI 08.10 · D';addUploadAction();window.dispatchEvent(new Event('scroll'))}
+function ensureSheet(){
+  let sheet=document.getElementById('dataHubSheetView');
+  if(sheet)return sheet;
+  const workspace=document.querySelector('.workspace');if(!workspace)return null;
+  sheet=document.createElement('section');sheet.id='dataHubSheetView';sheet.className='data-hub-sheet-view';sheet.hidden=true;
+  sheet.innerHTML=`<div class="data-hub-sheet-head"><div><span>HOJA DE DATOS</span><h1>Actualizar base desde Excel</h1><p>Subí Daily / SIOMAA, Importaciones, Pivot histórico o Master de modelos. Primero se valida y recién después de confirmar impacta en la base.</p></div><button type="button" id="dataHubBack">← Volver al reporte</button></div><div id="dataHubSheetMount"></div>`;
+  const content=document.getElementById('content');workspace.insertBefore(sheet,content||workspace.lastElementChild);
+  sheet.querySelector('#dataHubBack')?.addEventListener('click',closeSheet);
+  return sheet;
+}
+function suppressDataHubNav(){
+  const b=document.querySelector('#navigation [data-anchor="datahub"]');if(!b)return;
+  b.hidden=true;b.setAttribute('aria-hidden','true');b.tabIndex=-1;b.classList.remove('active','viewing');b.removeAttribute('data-v53-active');b.removeAttribute('data-scroll-current');
+}
+function decorateHub(){
+  const hub=document.getElementById('datahub');if(!hub)return;
+  hub.classList.remove('single-chapter','data-hub-chapter');hub.classList.add('data-hub-sheet-content');hub.removeAttribute('data-scroll-current');
+  const icon=hub.querySelector(':scope > header > i');if(icon)icon.textContent='DB';
+  const eyebrow=hub.querySelector(':scope > header span');if(eyebrow)eyebrow.textContent='BASE GOBERNADA';
+  const h2=hub.querySelector(':scope > header h2');if(h2)h2.textContent='Cargar archivos y actualizar la app';
+  const p=hub.querySelector(':scope > header p');if(p)p.textContent='Elegí el Excel, revisá la vista previa y confirmá. La carga queda trazada y controla duplicados antes de actualizar la base.';
+}
+function relocate(){
+  const sheet=ensureSheet(),mount=document.getElementById('dataHubSheetMount'),hub=document.getElementById('datahub');
+  if(hub&&mount&&hub.parentElement!==mount){mount.appendChild(hub);decorateHub()}
+  suppressDataHubNav();addUploadAction();
+  const badge=document.querySelector('.v53-build');if(badge)badge.textContent='UI 08.10 · F';
+  window.dispatchEvent(new Event('scroll'));
+}
+function openSheet(){
+  const sheet=ensureSheet();if(!sheet)return;
+  reportScroll=window.scrollY||0;relocate();sheet.hidden=false;document.body.classList.add('data-hub-sheet-open');
+  document.getElementById('sidebar')?.classList.remove('open');
+  const title=document.getElementById('viewTitle');if(title)title.textContent='Carga de archivos · Base de datos';
+  const btn=document.getElementById('v56UploadExcel');if(btn)btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function closeSheet(){
+  const sheet=document.getElementById('dataHubSheetView');if(sheet)sheet.hidden=true;document.body.classList.remove('data-hub-sheet-open');
+  const btn=document.getElementById('v56UploadExcel');if(btn)btn.classList.remove('active');
+  requestAnimationFrame(()=>{window.scrollTo({top:reportScroll,behavior:'auto'});window.dispatchEvent(new Event('scroll'))});
+}
+function addUploadAction(){
+  if(document.getElementById('v56UploadExcel'))return;
+  const actions=document.querySelector('.top-actions');if(!actions)return;
+  const b=document.createElement('button');b.id='v56UploadExcel';b.type='button';b.className='v56-upload-action';b.innerHTML='<span>⇧</span> Cargar Excel';b.title='Abrir hoja de actualización de datos';b.addEventListener('click',()=>document.body.classList.contains('data-hub-sheet-open')?closeSheet():openSheet());actions.prepend(b);
+}
 function loadScript(src,id){return new Promise((resolve,reject)=>{if(document.getElementById(id)){const old=document.getElementById(id);if(old.dataset.loaded==='1')return resolve();old.addEventListener('load',resolve,{once:true});old.addEventListener('error',reject,{once:true});return}const s=document.createElement('script');s.id=id;s.src=src;s.defer=true;s.crossOrigin='anonymous';s.addEventListener('load',()=>{s.dataset.loaded='1';resolve()},{once:true});s.addEventListener('error',reject,{once:true});document.body.appendChild(s)})}
-async function boot(){if(loading)return;loading=true;exposeData();addUploadAction();const content=document.getElementById('content');if(content)new MutationObserver(()=>queueMicrotask(relocate)).observe(content,{childList:true,subtree:true});try{if(!window.XLSX)await loadScript(XLSX_SRC,'v56-xlsx');await loadScript(DATA_HUB_SRC,'v56-datahub-core');relocate();setTimeout(relocate,80);setTimeout(relocate,400)}catch(err){console.error('Data Hub loader',err);const method=document.getElementById('method');if(method&&!document.getElementById('datahubLoadError')){const e=document.createElement('div');e.id='datahubLoadError';e.className='note';e.innerHTML='<b>Carga de archivos:</b> no se pudo iniciar el importador. Recargá la app con conexión a internet.';method.appendChild(e)}}finally{loading=false}}
+async function boot(){
+  if(loading)return;loading=true;exposeData();ensureSheet();addUploadAction();
+  const content=document.getElementById('content');if(content)new MutationObserver(()=>queueMicrotask(relocate)).observe(content,{childList:true,subtree:true});
+  const nav=document.getElementById('navigation');if(nav)new MutationObserver(()=>queueMicrotask(suppressDataHubNav)).observe(nav,{childList:true,subtree:false});
+  try{if(!window.XLSX)await loadScript(XLSX_SRC,'v56-xlsx');await loadScript(DATA_HUB_SRC,'v56-datahub-core');relocate();setTimeout(relocate,80);setTimeout(relocate,400)}catch(err){console.error('Data Hub loader',err);const mount=document.getElementById('dataHubSheetMount');if(mount&&!document.getElementById('datahubLoadError')){const e=document.createElement('div');e.id='datahubLoadError';e.className='note';e.innerHTML='<b>Carga de archivos:</b> no se pudo iniciar el importador. Recargá la app con conexión a internet.';mount.appendChild(e)}}finally{loading=false}
+}
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('data-hub-sheet-open'))closeSheet()});
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
