@@ -1,5 +1,5 @@
 /* 2W Market Analysis v38 — user-defined brand and group palette */
-const V38_VERSION='20261008-custom-palette-v1';
+const V38_VERSION='20261008-custom-palette-v2';
 const V38_BRANDS={
   GILERA:'#6D28D9',
   CORVEN:'#F97316',
@@ -13,6 +13,15 @@ const V38_GROUPS={
   SIMPA:'#FACC15',
   'LA EMILIA':'#86EFAC'
 };
+
+function v38loadV39(){
+  if(document.querySelector('script[data-v39-records]'))return;
+  const s=document.createElement('script');
+  s.src='/report-v39-historical-records-pivot-lineup.js?v=20261008-v46';
+  s.defer=true;
+  s.dataset.v39Records='1';
+  document.body.appendChild(s);
+}
 
 (function v38boot(){
   const ready=()=>{
@@ -35,6 +44,7 @@ const V38_GROUPS={
         return V37_GROUP_FALLBACK[group]||null;
       };
     }catch{}
+    v38loadV39();
     try{if(typeof render==='function'&&typeof DATA!=='undefined'&&DATA)render()}catch(e){console.error('V38 palette render',e)}
   };
   ready();
