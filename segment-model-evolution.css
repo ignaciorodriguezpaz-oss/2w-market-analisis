@@ -1,0 +1,14 @@
+/* Monthly model evolution by segment */
+.segment-model-evolution .model-rank-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:10px 0 4px}
+.segment-model-evolution .model-rank-strip>span{display:grid;grid-template-columns:20px minmax(0,1fr);grid-template-areas:'rank name' 'rank meta';column-gap:7px;align-items:center;border:1px solid #e4e9ef;background:#f8fafb;border-radius:10px;padding:7px 8px;min-width:0}
+.segment-model-evolution .model-rank-strip i{grid-area:rank;width:20px;height:20px;border-radius:7px;background:#172131;color:#fff;display:grid;place-items:center;font-style:normal;font-size:8px;font-weight:950}
+.segment-model-evolution .model-rank-strip b{grid-area:name;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px;color:#2c3748}
+.segment-model-evolution .model-rank-strip em{grid-area:meta;font-style:normal;font-size:7px;color:#7c8796;white-space:nowrap}
+.segment-model-evolution .segment-legend{row-gap:7px}.segment-model-evolution .segment-legend span{max-width:170px;overflow:hidden;text-overflow:ellipsis}
+.segment-model-evolution .model-leader-note{margin-top:8px;padding:8px 10px;border-radius:9px;background:#f7f8fa;color:#6b7686;font-size:8px;line-height:1.4}
+.segment-model-evolution .model-leader-note b{color:#2d394a}
+.segment-model-evolution .segment-pulse-card{overflow:hidden}
+.segment-model-evolution .segment-chart{overflow-x:auto;overflow-y:hidden}
+.segment-model-evolution .segment-chart svg{min-width:620px}
+@media(max-width:900px){.segment-model-evolution .model-rank-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.segment-model-evolution .model-rank-strip{grid-template-columns:1fr}.segment-model-evolution .segment-chart svg{min-width:700px}.segment-model-evolution .segment-legend span{max-width:145px}}
