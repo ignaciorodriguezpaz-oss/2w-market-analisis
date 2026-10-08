@@ -1,5 +1,5 @@
-/* 2W Market Analysis v38 — user-defined brand and group palette */
-const V38_VERSION='20261008-custom-palette-v3';
+/* 2W Market Analysis v38 — user-defined brand/group palette + final supply placement */
+const V38_VERSION='20261008-custom-palette-v4';
 const V38_BRANDS={
   GILERA:'#6D28D9',
   CORVEN:'#F97316',
@@ -13,6 +13,26 @@ const V38_GROUPS={
   SIMPA:'#FACC15',
   'LA EMILIA':'#86EFAC'
 };
+
+/* v39 placement patch kept in the last loaded layer so the visible Forecast chapter
+   replaces the old technical governance card with Supply Intelligence in-place. */
+const V39_FINAL_BASE_FORECAST=typeof forecast==='function'?forecast:null;
+if(V39_FINAL_BASE_FORECAST){
+  forecast=function(){
+    let html=V39_FINAL_BASE_FORECAST();
+    let governance='';
+    let supply='';
+    try{governance=typeof v27forecastGovernanceBlock==='function'?v27forecastGovernanceBlock():''}catch(e){}
+    try{supply=typeof v38supplyBlock==='function'?v38supplyBlock():''}catch(e){}
+    if(governance&&supply&&html.includes(governance)){
+      /* v38 appended Supply at the bottom. Remove that copy and put it exactly where
+         the governance block was, matching the narrative shown in the UI. */
+      if(html.includes(supply))html=html.replace(supply,'');
+      html=html.replace(governance,supply);
+    }
+    return html;
+  };
+}
 
 (function v38boot(){
   const ready=()=>{
@@ -35,7 +55,7 @@ const V38_GROUPS={
         return V37_GROUP_FALLBACK[group]||null;
       };
     }catch{}
-    try{if(typeof render==='function'&&typeof DATA!=='undefined'&&DATA)render()}catch(e){console.error('V38 palette render',e)}
+    try{if(typeof render==='function'&&typeof DATA!=='undefined'&&DATA)render()}catch(e){console.error('V38 palette/supply placement render',e)}
   };
   ready();
 })();
