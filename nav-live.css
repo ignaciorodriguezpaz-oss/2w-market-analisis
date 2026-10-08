@@ -1,9 +1,17 @@
-.sidebar nav button.active:not(.viewing){background:transparent;color:#9ca8b8;box-shadow:none;transform:none}
-.sidebar nav button.viewing{opacity:1!important;background:linear-gradient(90deg,#e0182d 0,#c91529 4px,rgba(224,24,45,.20) 4px,rgba(255,255,255,.08) 100%)!important;color:#fff!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 8px 24px rgba(0,0,0,.18)!important;transform:translateX(3px)}
+.sidebar{background:linear-gradient(165deg,#244b6b 0%,#2d5878 48%,#365f7d 100%)!important;border-right:1px solid rgba(255,255,255,.10)}
+.sidebar .brand>span{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.18)!important}
+.sidebar .brand small{color:#c3d2df!important}
+.sidebar .side-status{border-top-color:rgba(255,255,255,.14)!important}
+.sidebar .side-status small{color:#c0cfdb!important}
+.sidebar nav button{color:#d2deea!important}
+.sidebar nav button i{color:#a9bfd1!important}
+.sidebar nav button.active:not(.viewing){background:transparent;color:#d2deea;box-shadow:none;transform:none}
+.sidebar nav button:hover{background:rgba(255,255,255,.10)!important;color:#fff!important}
+.sidebar nav button.viewing{opacity:1!important;background:linear-gradient(90deg,#e0182d 0,#c91529 4px,rgba(224,24,45,.18) 4px,rgba(255,255,255,.13) 100%)!important;color:#fff!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 8px 24px rgba(15,31,49,.18)!important;transform:translateX(3px)}
 .sidebar nav button.viewing::before{display:none!important}
-.sidebar nav button.viewing i{background:#e0182d!important;color:#fff!important;box-shadow:0 4px 12px rgba(224,24,45,.28)!important}
+.sidebar nav button.viewing i{background:#e0182d!important;color:#fff!important;box-shadow:0 4px 12px rgba(117,10,23,.28)!important}
 .sidebar nav button.viewing span{font-weight:950!important;color:#fff!important}
-.sidebar nav button:not(.viewing){opacity:.66}
+.sidebar nav button:not(.viewing){opacity:.82}
 .sidebar nav button:not(.viewing):hover{opacity:1}
 body[data-current-chapter] .breadcrumbs b{transition:color .18s ease}
-@media(max-width:760px){.sidebar nav button.viewing{transform:none;background:linear-gradient(90deg,#e0182d 0,#c91529 4px,rgba(224,24,45,.24) 4px,rgba(255,255,255,.09) 100%)!important}}
+@media(max-width:760px){.sidebar nav button.viewing{transform:none;background:linear-gradient(90deg,#e0182d 0,#c91529 4px,rgba(224,24,45,.18) 4px,rgba(255,255,255,.14) 100%)!important}}
