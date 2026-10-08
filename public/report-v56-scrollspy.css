@@ -1,0 +1,10 @@
+/* v56 · reliable live scrollspy for report index */
+#navigation button{position:relative;overflow:hidden}
+#navigation button.viewing,#navigation button[data-v53-active="true"]{background:linear-gradient(90deg,rgba(224,24,45,.98) 0 4px,rgba(255,255,255,.20) 4px 100%)!important;color:#fff!important;opacity:1!important;border-color:rgba(255,255,255,.22)!important;box-shadow:0 8px 22px rgba(28,55,75,.20)!important;transform:translateX(2px)}
+#navigation button.viewing i,#navigation button[data-v53-active="true"] i{background:#e0182d!important;color:#fff!important;border-radius:7px!important;width:24px!important;height:22px!important;display:grid!important;place-items:center!important;box-shadow:0 4px 12px rgba(224,24,45,.24)}
+#navigation button.viewing span,#navigation button[data-v53-active="true"] span{font-weight:950!important;color:#fff!important}
+#navigation button:not(.viewing):not([data-v53-active="true"]){opacity:.76!important}
+#navigation button:not(.viewing):not([data-v53-active="true"]):hover{opacity:1!important}
+#navigation button,#navigation button i,#navigation button span{transition:background .18s ease,color .18s ease,opacity .18s ease,transform .18s ease,box-shadow .18s ease}
+@media(max-width:760px){#navigation button.viewing,#navigation button[data-v53-active="true"]{transform:none!important;background:linear-gradient(90deg,rgba(224,24,45,.98) 0 4px,rgba(255,255,255,.17) 4px 100%)!important}}
+@media(prefers-reduced-motion:reduce){#navigation button,#navigation button i,#navigation button span{transition:none}}
