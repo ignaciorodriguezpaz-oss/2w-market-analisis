@@ -1,4 +1,4 @@
-/* Pre-open data synchronization gate: do not reveal the dashboard until live sources are refreshed. */
+/* Pre-open data synchronization gate: authenticate first, then refresh all live sources before revealing the dashboard. */
 (()=>{
   const DAILY_ENDPOINT='https://ijaqabjjhsuvovtfffit.supabase.co/functions/v1/data-ingest';
   const IMPORTS_ENDPOINT='https://ijaqabjjhsuvovtfffit.supabase.co/functions/v1/imports-live';
@@ -20,7 +20,7 @@
   function setStage(title,detail=''){
     const box=document.getElementById('loading');
     if(!box)return;
-    let p=box.querySelector('p');
+    const p=box.querySelector('p');
     if(p)p.innerHTML=`<strong>${title}</strong>${detail?`<br><small>${detail}</small>`:''}`;
   }
 
@@ -28,7 +28,11 @@
     const ctrl=new AbortController();
     const timer=setTimeout(()=>ctrl.abort(),9000);
     try{
-      const r=await fetch(url,{headers:key?{'x-upload-key':key}:{},cache:'no-store',signal:ctrl.signal});
+      const headers={};
+      if(key)headers['x-upload-key']=key;
+      const token=window.APP_AUTH?.getAccessToken?.();
+      if(token)headers['authorization']=`Bearer ${token}`;
+      const r=await fetch(url,{headers,cache:'no-store',signal:ctrl.signal});
       if(!r.ok)throw new Error(`HTTP ${r.status}`);
       return await r.json();
     }finally{clearTimeout(timer)}
@@ -36,7 +40,7 @@
 
   async function refreshLive(){
     const key=localStorage.getItem(STORE);
-    if(!key){boot.warnings.push('Sin clave local para consultar snapshots live');return boot}
+    if(!key){boot.warnings.push('Sin clave local de carga; se usa la base estática validada para fuentes restringidas.');return boot}
     setStage('Actualizando Daily','Validando último corte y acumulado MTD…');
     const [daily,imports]=await Promise.allSettled([
       getJson(DAILY_ENDPOINT+'?action=status',key),
@@ -74,22 +78,20 @@
 
   function patchVisibleLive(){
     const period=boot.dailyPeriod,total=boot.dailyMtd,cutoff=boot.dailyCutoff;
-    if(!period||!total)return;
-    const m=monthLabel(period);
-    document.querySelectorAll('.kpi').forEach(k=>{
-      const title=norm(k.querySelector('.kpi-top span')?.textContent||k.querySelector('span')?.textContent);
-      if(title==='NOWCAST'||title===`${m} MTD`||title.endsWith(' MTD')){
-        const value=k.querySelector(':scope>b');
-        const note=k.querySelector('small');
-        const tag=k.querySelector('.kpi-top em');
-        if(value)value.textContent=fmt(total);
-        if(note)note.textContent=`SIOMAA MTD · ${period} · corte ${cutoff||'—'}`;
-        if(tag){tag.textContent='OPEN MONTH';tag.style.opacity='1'}
-      }
-    });
+    if(period&&total){
+      const m=monthLabel(period);
+      document.querySelectorAll('.kpi').forEach(k=>{
+        const title=norm(k.querySelector('.kpi-top span')?.textContent||k.querySelector('span')?.textContent);
+        if(title==='NOWCAST'||title===`${m} MTD`||title.endsWith(' MTD')){
+          const value=k.querySelector(':scope>b'),note=k.querySelector('small'),tag=k.querySelector('.kpi-top em');
+          if(value)value.textContent=fmt(total);
+          if(note)note.textContent=`SIOMAA MTD · ${period} · corte ${cutoff||'—'}`;
+          if(tag){tag.textContent='OPEN MONTH';tag.style.opacity='1'}
+        }
+      });
+    }
     document.querySelectorAll('.update-band>div').forEach(d=>{
-      const label=norm(d.querySelector('span')?.textContent),b=d.querySelector('b');
-      if(!b)return;
+      const label=norm(d.querySelector('span')?.textContent),b=d.querySelector('b');if(!b)return;
       if(label==='SIOMAA'&&cutoff)b.textContent=cutoff;
       if(label==='IMPORTS'&&boot.imports?.meta_patch?.imports_cutoff)b.textContent=boot.imports.meta_patch.imports_cutoff;
     });
@@ -99,6 +101,8 @@
 
   async function bootSync(){
     try{
+      setStage('Verificando acceso','Validando usuario y permisos…');
+      if(window.__2W_AUTH_READY__)await window.__2W_AUTH_READY__;
       setStage('Actualizando base','Mercado, histórico, competencia, Honda, forecast y módulos…');
       const livePromise=refreshLive();
       await waitForAppData();
@@ -117,8 +121,7 @@
       const app=document.getElementById('app');if(app)app.hidden=false;
       const loading=document.getElementById('loading');if(loading)loading.style.display='none';
     }catch(error){
-      console.error('[preload-sync]',error);
-      boot.warnings.push(error.message);
+      console.error('[preload-sync]',error);boot.warnings.push(error.message);
       setStage('No se pudo completar la actualización',error.message);
       const app=document.getElementById('app');if(app)app.hidden=true;
     }
