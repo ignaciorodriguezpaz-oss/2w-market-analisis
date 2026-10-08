@@ -1,4 +1,4 @@
-/* v57 logic · one scroll source for every report index item + segment-model loader */
+/* v57 logic · legacy scroll helper + latest segment/index loaders */
 (()=>{
 let raf=0,current='';
 const nav=()=>document.getElementById('navigation');
@@ -11,6 +11,10 @@ function detect(){raf=0;apply(pick())}
 function schedule(){if(!raf)raf=requestAnimationFrame(detect)}
 function go(id){const el=document.getElementById(id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(schedule,80);setTimeout(schedule,300);setTimeout(schedule,700)}
 function loadV57Models(){if(!document.querySelector('link[data-v57-models]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/report-v57-segment-model-analysis.css?v=20261008-v57a';l.dataset.v57Models='1';document.head.appendChild(l)}if(!document.querySelector('script[data-v57-models]')){const s=document.createElement('script');s.src='/report-v57-segment-model-analysis.js?v=20261008-v57a';s.defer=true;s.dataset.v57Models='1';document.body.appendChild(s)}}
-function start(){loadV57Models();document.addEventListener('click',e=>{const b=e.target.closest?.('#navigation [data-anchor]');if(!b)return;const id=b.dataset.anchor;if(!id)return;e.preventDefault();go(id);document.getElementById('sidebar')?.classList.remove('open')},true);window.addEventListener('scroll',schedule,{passive:true,capture:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('hashchange',schedule);const n=nav();if(n)new MutationObserver(()=>{current='';schedule()}).observe(n,{childList:true,subtree:true});const c=document.getElementById('content');if(c)new MutationObserver(()=>{current='';schedule()}).observe(c,{childList:true,subtree:true});schedule();setTimeout(schedule,120);setTimeout(schedule,600);setTimeout(schedule,1400)}
+function loadV59Index(){
+  if(!document.querySelector('link[data-v59-index]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/report-v59-index-scroll.css?v=20261008-v59b';l.dataset.v59Index='1';document.head.appendChild(l)}
+  if(!document.querySelector('script[data-v59-index]')){const s=document.createElement('script');s.src='/report-v59-index-scroll.js?v=20261008-v59b';s.defer=true;s.dataset.v59Index='1';document.body.appendChild(s)}
+}
+function start(){loadV57Models();loadV59Index();document.addEventListener('click',e=>{const b=e.target.closest?.('#navigation [data-anchor]');if(!b)return;const id=b.dataset.anchor;if(!id)return;e.preventDefault();go(id);document.getElementById('sidebar')?.classList.remove('open')},true);window.addEventListener('scroll',schedule,{passive:true,capture:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('hashchange',schedule);const n=nav();if(n)new MutationObserver(()=>{current='';schedule()}).observe(n,{childList:true,subtree:true});const c=document.getElementById('content');if(c)new MutationObserver(()=>{current='';schedule()}).observe(c,{childList:true,subtree:true});schedule();setTimeout(schedule,120);setTimeout(schedule,600);setTimeout(schedule,1400)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
