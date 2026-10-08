@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/story.css">
   <link rel="stylesheet" href="/master.css">
   <link rel="stylesheet" href="/ui-mode.css">
+  <link rel="stylesheet" href="/auth.css?v=20261008-1">
   <link rel="stylesheet" href="/nav-scrollspy.css?v=20261008-3">
   <link rel="stylesheet" href="/data-hub.css?v=20261008-1">
   <link rel="stylesheet" href="/operational-report.css?v=20261008-1">
@@ -57,7 +58,10 @@
   <div class="filter-scrim" id="filterScrim" aria-hidden="true"></div>
   <nav class="mobile-dock" id="mobileDock" aria-label="Navegación móvil"></nav>
   <div class="tooltip" id="tooltip" hidden></div>
-  <script src="/preload-sync.js?v=20261008-1" defer></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="/auth-gate.js?v=20261008-1" defer></script>
+  <script src="/preload-sync.js?v=20261008-2" defer></script>
   <script src="/core.js" defer></script>
   <script src="/views-market.js" defer></script>
   <script src="/views-planning.js" defer></script>
@@ -83,5 +87,6 @@
   <script src="/data-hub.js?v=20261008-2" defer></script>
   <script src="/data-live.js?v=20261008-3" defer></script>
   <script src="/imports-single-report.js?v=20261008-1" defer></script>
+  <script src="/user-admin-ui.js?v=20261008-1" defer></script>
 </body>
 </html>
