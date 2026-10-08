@@ -1,0 +1,29 @@
+/* v38 Supply intelligence */
+.v27-governance{display:none!important}
+.v38-supply{margin-top:24px;overflow:hidden}
+.v38-supply .card-head{align-items:flex-start;gap:20px}
+.v38-kpis{grid-template-columns:repeat(5,minmax(0,1fr))}
+.v38-grid2{align-items:stretch}
+.v38-grid2>.card{min-width:0}
+.v38-chart-scroll{overflow-x:auto;padding-bottom:4px}
+.v38-chart{display:block;width:100%;min-width:760px;height:auto}
+.v38-grid{stroke:rgba(15,23,42,.10);stroke-width:1}
+.v38-axis{font:500 12px/1.2 Inter,system-ui,sans-serif;fill:#6b7280}
+.v38-import{fill:#7c3aed;opacity:.84}
+.v38-market{fill:#263238;opacity:.82}
+.v38-ratio-line{fill:none;stroke:#c98a19;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.v38-ratio-dot{fill:#c98a19;stroke:#fff;stroke-width:2}
+.v38-active{fill:#aeb7c2;opacity:.72}
+.v38-honda-line{fill:none;stroke:#d71920;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}
+.v38-honda-dot{fill:#d71920;stroke:#fff;stroke-width:2}
+.v38-new-label{font:700 11px/1 Inter,system-ui,sans-serif;fill:#7c3aed}
+.v38-new-table td,.v38-new-table th{white-space:nowrap}
+.v38-new-table td:first-child,.v38-new-table th:first-child{white-space:normal;min-width:180px}
+.v38-new-table small{display:block;color:#8b93a1;font-size:10px;margin-top:2px}
+.v38-read-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.v38-read-grid>div{border:1px solid rgba(15,23,42,.08);border-radius:16px;padding:15px 16px;background:rgba(248,250,252,.7)}
+.v38-read-grid b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;color:#222b36}
+.v38-read-grid span{display:block;font-size:13px;line-height:1.45;color:#56606d}
+.v38-governance-tech{margin-top:24px}
+@media(max-width:1100px){.v38-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.v38-read-grid{grid-template-columns:1fr}.v38-grid2{grid-template-columns:1fr}}
+@media(max-width:680px){.v38-kpis{grid-template-columns:1fr}.v38-supply .card-head{display:block}.v38-supply .badge{margin-top:10px}.v38-chart{min-width:680px}.v38-new-table{font-size:12px}}
