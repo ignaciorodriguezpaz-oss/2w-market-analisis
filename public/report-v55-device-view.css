@@ -1,0 +1,64 @@
+/* v55 · explicit PC / Phone interface switch */
+.device-view-switch{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid #c8d4de;background:#eef3f7;border-radius:12px;box-shadow:0 2px 8px rgba(34,52,68,.05)}
+.device-view-switch button{border:0!important;background:transparent!important;color:#607284!important;border-radius:9px!important;padding:7px 10px!important;min-width:0!important;font-size:9px!important;font-weight:950!important;line-height:1!important;letter-spacing:.03em!important;box-shadow:none!important}
+.device-view-switch button.active{background:#fff!important;color:#244f72!important;box-shadow:0 2px 8px rgba(34,52,68,.10)!important}
+.device-view-switch button[data-device-view="phone"].active{color:#e0182d!important}
+.device-view-switch .dv-icon{font-size:13px;margin-right:4px;vertical-align:-1px}
+
+/* Force desktop composition independent of physical viewport. */
+body[data-ui-mode="pc"]{min-width:1180px}
+body[data-ui-mode="pc"] .app{display:grid!important;grid-template-columns:244px minmax(0,1fr)!important;max-width:none!important;margin:0!important}
+body[data-ui-mode="pc"] .sidebar{position:sticky!important;left:auto!important;top:0!important;width:auto!important;height:100vh!important;transform:none!important;box-shadow:8px 0 28px rgba(34,67,91,.10)!important}
+body[data-ui-mode="pc"] .topbar{height:72px!important;padding:0 28px!important}
+body[data-ui-mode="pc"] .menu{display:none!important}
+body[data-ui-mode="pc"] .filters{top:72px!important;padding:12px 28px!important;overflow:visible!important;flex-wrap:wrap!important}
+body[data-ui-mode="pc"] .filters label{display:grid!important;min-width:150px!important}
+body[data-ui-mode="pc"] main#content{padding-left:28px!important;padding-right:28px!important}
+body[data-ui-mode="pc"] .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+body[data-ui-mode="pc"] .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+body[data-ui-mode="pc"] .kpis{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+body[data-ui-mode="pc"] .v53-segment-grid,body[data-ui-mode="pc"] .v54-segment-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+body[data-ui-mode="pc"] .breadcrumbs span{display:block!important}
+body[data-ui-mode="pc"] .top-actions .freshness{display:inline-flex!important}
+body[data-ui-mode="pc"] .top-actions button{font-size:inherit!important}
+
+/* Force phone composition independent of physical viewport. */
+body[data-ui-mode="phone"]{background:#dfe5ea}
+body[data-ui-mode="phone"] .app{display:block!important;width:min(100%,430px)!important;max-width:430px!important;margin:0 auto!important;background:#f3f5f7!important;min-height:100vh!important;box-shadow:0 0 42px rgba(28,42,54,.12)}
+body[data-ui-mode="phone"] .workspace{width:100%!important;min-width:0!important}
+body[data-ui-mode="phone"] .sidebar{position:fixed!important;top:0!important;left:calc(50% - min(50vw,215px) - 260px)!important;width:244px!important;height:100vh!important;transition:left .25s ease!important;z-index:40!important}
+body[data-ui-mode="phone"] .sidebar.open{left:calc(50% - min(50vw,215px))!important;box-shadow:20px 0 50px rgba(0,0,0,.25)!important}
+body[data-ui-mode="phone"] .topbar{height:62px!important;padding:0 12px!important;gap:8px!important}
+body[data-ui-mode="phone"] .menu{display:block!important;border:0!important;background:transparent!important;font-size:19px!important;padding:6px!important}
+body[data-ui-mode="phone"] .breadcrumbs{min-width:0!important;flex:1!important}
+body[data-ui-mode="phone"] .breadcrumbs span{display:none!important}
+body[data-ui-mode="phone"] .breadcrumbs b{font-size:12px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+body[data-ui-mode="phone"] .top-actions{gap:5px!important}
+body[data-ui-mode="phone"] .top-actions .freshness,body[data-ui-mode="phone"] .top-actions .v53-build{display:none!important}
+body[data-ui-mode="phone"] .top-actions>button{font-size:0!important;padding:7px 8px!important}
+body[data-ui-mode="phone"] .top-actions>button:first-letter{font-size:15px!important}
+body[data-ui-mode="phone"] .device-view-switch{padding:2px!important;border-radius:10px!important;flex-shrink:0!important}
+body[data-ui-mode="phone"] .device-view-switch button{padding:6px 7px!important;font-size:0!important}
+body[data-ui-mode="phone"] .device-view-switch .dv-icon{font-size:14px!important;margin:0!important}
+body[data-ui-mode="phone"] .filters{top:62px!important;padding:9px 10px!important;overflow-x:auto!important;flex-wrap:nowrap!important;gap:7px!important;scrollbar-width:none!important}
+body[data-ui-mode="phone"] .filters::-webkit-scrollbar{display:none!important}
+body[data-ui-mode="phone"] .filters:before{display:none!important}
+body[data-ui-mode="phone"] .filters label{min-width:140px!important;display:grid!important}
+body[data-ui-mode="phone"] .filters label:nth-of-type(2){display:none!important}
+body[data-ui-mode="phone"] .filters .reset{min-width:96px!important;margin-left:0!important}
+body[data-ui-mode="phone"] main#content{padding:14px 10px 28px!important;max-width:none!important;width:100%!important}
+body[data-ui-mode="phone"] .single-chapter{margin:0 0 16px!important;padding:16px 10px 20px!important;border-radius:16px!important}
+body[data-ui-mode="phone"] .page-head{display:block!important}
+body[data-ui-mode="phone"] .page-head h1{font-size:26px!important}
+body[data-ui-mode="phone"] .kpis{grid-template-columns:1fr 1fr!important;gap:8px!important}
+body[data-ui-mode="phone"] .kpi:last-child{grid-column:1/-1!important}
+body[data-ui-mode="phone"] .grid.two,body[data-ui-mode="phone"] .grid.three,body[data-ui-mode="phone"] .v53-segment-grid,body[data-ui-mode="phone"] .v54-segment-grid{grid-template-columns:1fr!important}
+body[data-ui-mode="phone"] .card{padding:13px!important;border-radius:14px!important}
+body[data-ui-mode="phone"] .chart-shell{min-height:210px!important;overflow-x:auto!important}
+body[data-ui-mode="phone"] .table-wrap{max-width:100%!important;overflow:auto!important}
+body[data-ui-mode="phone"] footer{display:grid!important;padding:14px 12px!important}
+
+@media(max-width:760px){
+  body:not([data-ui-mode="pc"]):not([data-ui-mode="phone"]) .device-view-switch button{font-size:0!important;padding:6px 7px!important}
+  body:not([data-ui-mode="pc"]):not([data-ui-mode="phone"]) .device-view-switch .dv-icon{font-size:14px!important;margin:0!important}
+}
