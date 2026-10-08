@@ -2,13 +2,13 @@
 const FLOW=[
   ['executive','Resumen ejecutivo'],
   ['context','Argentina hoy'],
-  ['consumer','Consumidor & movilidad'],
-  ['market','Mercado, momentum & estacionalidad'],
+  ['market','Mercado, Daily & estacionalidad'],
   ['structure','Segmentos, competencia & supply'],
+  ['consumer','Consumidor & movilidad'],
   ['forecast','Forecast CY / KI'],
   ['user','Probabilidad & User Scenario'],
   ['planning','Honda & Planning'],
-  ['actions','Riesgos, acciones & Safety'],
+  ['actions','Radar, riesgos & acciones'],
   ['method','Metodología, validación & reportes']
 ];
 let busy=false,queued=false;
@@ -24,7 +24,7 @@ function apply(){
     const wanted=FLOW.map(([id])=>id);
     const current=[...content.querySelectorAll(':scope > .single-chapter[id]')].map(x=>x.id).filter(id=>wanted.includes(id));
     if(current.join('|')!==wanted.join('|'))FLOW.forEach(([id])=>{const el=document.getElementById(id);if(el&&el.parentElement===content)content.appendChild(el)});
-    FLOW.forEach(([id,,],i)=>{
+    FLOW.forEach(([id],i)=>{
       const sec=document.getElementById(id),head=sec?.querySelector(':scope > header'),n=nn(i);
       if(!head)return;
       const badge=head.querySelector(':scope > i');if(badge)badge.textContent=n;
