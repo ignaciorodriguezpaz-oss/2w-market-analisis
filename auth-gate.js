@@ -70,23 +70,15 @@ function showLogin(message=''){
     }catch(ex){err.textContent=errorText(ex)}
   });
 }
-function showFirstSetup(){
-  const box=shell('Crear administrador','La aplicación todavía no tiene usuarios. Inicializá el usuario administrador y luego el sistema te obligará a cambiar la contraseña temporal.',`<form class="auth-form" id="setupForm"><label>Usuario<input id="setupUser" value="admin" autocomplete="username" required></label><label>Nombre visible<input id="setupName" value="Administrador" required></label><label>Contraseña temporal<input id="setupPassword" type="password" autocomplete="new-password" minlength="8" required></label><button class="auth-primary" type="submit">Crear ADMIN</button><div class="auth-error" id="authError"></div></form>`,'Esta pantalla se deshabilita automáticamente cuando se crea el primer usuario.');
-  box.querySelector('#setupForm').addEventListener('submit',async e=>{
-    e.preventDefault();const err=box.querySelector('#authError'),username=box.querySelector('#setupUser').value.trim().toLowerCase(),displayName=box.querySelector('#setupName').value.trim(),password=box.querySelector('#setupPassword').value;err.textContent='';
-    if(password.length<8){err.textContent='La contraseña temporal debe tener al menos 8 caracteres.';return}
-    try{
-      const r=await fetch(SETUP_URL,{method:'POST',headers:{'content-type':'application/json','apikey':PUBLISHABLE_KEY},body:JSON.stringify({username,displayName,password})});const out=await r.json();if(!r.ok)throw new Error(out.error||'No se pudo crear el administrador.');
-      const {data,error}=await supa.auth.signInWithPassword({email:emailFor(username),password});if(error)throw error;
-      await acceptSession(data.session,password);
-    }catch(ex){err.textContent=errorText(ex)}
-  });
+function showSetupPending(){
+  const box=shell('Administrador pendiente','La capa de seguridad ya está instalada, pero el primer usuario todavía debe crearse de forma segura en Supabase Authentication.',`<div class="auth-form"><label>Usuario reservado<input value="admin" disabled></label><button class="auth-primary" id="retrySetup" type="button">Ya lo creé · volver a comprobar</button><div class="auth-error" id="authError"></div></div>`,'Una vez creado el usuario admin, esta pantalla desaparece y el primer ingreso obliga a cambiar la contraseña temporal.');
+  box.querySelector('#retrySetup').addEventListener('click',()=>location.reload());
 }
 async function start(){
   if(!supa){shell('Error de seguridad','No se pudo iniciar el módulo de autenticación.','<div class="auth-error">Supabase Auth no está disponible.</div>');return}
   try{
-    const r=await fetch(SETUP_URL,{headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'});const setup=await r.json();
-    if(setup.needs_setup){showFirstSetup();return}
+    const r=await fetch(SETUP_URL,{headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'});const setup=await r.json().catch(()=>({}));
+    if(setup.manual_admin_creation_required){showSetupPending();return}
   }catch{}
   const {data}=await supa.auth.getSession();
   if(data.session)await acceptSession(data.session);else showLogin();
