@@ -1,0 +1,17 @@
+/* v54 · explicit chapter bands for the live public report */
+main#content{background:#dce2e7!important;padding:24px 18px 30px!important;border-radius:0!important}
+.single-chapter{position:relative!important;margin:0 0 26px!important;padding:26px 22px 32px!important;border:1px solid rgba(53,70,85,.13)!important;border-radius:22px!important;box-shadow:0 10px 30px rgba(31,43,54,.05)!important;overflow:hidden!important;scroll-margin-top:154px!important}
+.single-chapter:last-child{margin-bottom:0!important}.single-chapter:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,rgba(63,111,145,.38),rgba(63,111,145,.08),transparent);pointer-events:none}
+#executive.single-chapter{background:#fafbfc!important}
+#context.single-chapter{background:#e9edf1!important}
+#market.single-chapter{background:#f4f6f7!important}
+#structure.single-chapter{background:#e2e8ec!important}
+#consumer.single-chapter{background:#f8f9fa!important}
+#forecast.single-chapter{background:#e8edf0!important}
+#user.single-chapter{background:#f3f5f6!important}
+#planning.single-chapter{background:#e1e7eb!important}
+#actions.single-chapter{background:#f7f8f9!important}
+#method.single-chapter{background:#e9edf0!important}
+.single-chapter>header{margin-bottom:22px!important}.single-chapter>header:after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:1px;background:linear-gradient(90deg,rgba(63,111,145,.30),rgba(63,111,145,.05),transparent)}
+.single-chapter .card,.single-chapter .kpi,.single-chapter .v53-seg-card,.single-chapter .v54-seg-card{background:#fff!important}
+@media(max-width:760px){main#content{padding:14px 8px 22px!important}.single-chapter{margin-bottom:16px!important;padding:18px 12px 22px!important;border-radius:17px!important;scroll-margin-top:126px!important}}
