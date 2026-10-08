@@ -1,25 +1,34 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" class="auth-locked">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b1017">
   <meta name="description" content="2W Market Analysis — Argentina Motorcycle Intelligence: un único reporte de contexto, mercado, forecast, KI, producto y planificación.">
   <title>2W Market Analysis · Argentina Motorcycle Intelligence</title>
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/modules.css">
-  <link rel="stylesheet" href="/story.css">
-  <link rel="stylesheet" href="/master.css">
-  <link rel="stylesheet" href="/ui-mode.css">
-  <link rel="stylesheet" href="/auth.css?v=20261008-2">
-  <link rel="stylesheet" href="/nav-scrollspy.css?v=20261008-3">
-  <link rel="stylesheet" href="/data-hub.css?v=20261008-1">
-  <link rel="stylesheet" href="/operational-report.css?v=20261008-1">
-  <link rel="stylesheet" href="/segment-model-evolution.css?v=20261008-1">
-  <link rel="stylesheet" href="/nav-live.css?v=20261008-2">
-  <link rel="stylesheet" href="/chapter-separation.css?v=20261008-1">
+  <style id="authCritical">html.auth-locked,html.auth-locked body{overflow:hidden}.auth-shell{position:fixed;inset:0;z-index:1000000;display:grid;place-items:center;background:linear-gradient(145deg,#0b1017,#17202b);padding:24px;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.auth-card{width:min(460px,100%);background:#fff;color:#101722;border-radius:24px;padding:34px;box-shadow:0 30px 90px #0007}.auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:28px}.auth-brand>span{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:#e0182d;color:#fff;font-weight:900;font-size:20px}.auth-brand b{display:block;font-size:18px;letter-spacing:.08em}.auth-brand small{display:block;margin-top:3px;color:#6e7785;font-size:11px;letter-spacing:.12em}.auth-card h1{font-size:26px;margin:0 0 8px}.auth-card p{color:#677181;line-height:1.45;margin:0}.auth-wait{margin-top:20px;height:4px;border-radius:99px;background:#e9edf2;overflow:hidden}.auth-wait i{display:block;height:100%;width:40%;background:#e0182d;animation:authwait 1s infinite ease-in-out}@keyframes authwait{0%{transform:translateX(-120%)}100%{transform:translateX(350%)}}</style>
+  <link rel="stylesheet" href="/style.css?v=20261008-5">
+  <link rel="stylesheet" href="/modules.css?v=20261008-5">
+  <link rel="stylesheet" href="/story.css?v=20261008-5">
+  <link rel="stylesheet" href="/master.css?v=20261008-5">
+  <link rel="stylesheet" href="/ui-mode.css?v=20261008-5">
+  <link rel="stylesheet" href="/auth.css?v=20261008-3">
+  <link rel="stylesheet" href="/nav-scrollspy.css?v=20261008-5">
+  <link rel="stylesheet" href="/data-hub.css?v=20261008-5">
+  <link rel="stylesheet" href="/operational-report.css?v=20261008-5">
+  <link rel="stylesheet" href="/segment-model-evolution.css?v=20261008-5">
+  <link rel="stylesheet" href="/nav-live.css?v=20261008-5">
+  <link rel="stylesheet" href="/chapter-separation.css?v=20261008-5">
 </head>
 <body>
+  <div id="authShell" class="auth-shell" role="dialog" aria-modal="true" aria-label="Acceso protegido">
+    <section class="auth-card">
+      <div class="auth-brand"><span>2W</span><div><b>ARGENTINA</b><small>MARKET ANALYSIS · ACCESO PROTEGIDO</small></div></div>
+      <h1>Verificando acceso…</h1>
+      <p>La aplicación permanece bloqueada hasta validar usuario y permisos.</p>
+      <div class="auth-wait"><i></i></div>
+    </section>
+  </div>
   <div class="loading" id="loading"><div class="loading-mark">2W</div><p>Preparando reporte integral…</p><div class="loading-bar"><i></i></div></div>
   <div class="app" id="app" hidden>
     <aside class="sidebar" id="sidebar">
@@ -60,36 +69,36 @@
   <div class="tooltip" id="tooltip" hidden></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/auth-gate.js?v=20261008-2" defer></script>
-  <script src="/auth-fetch.js?v=20261008-1" defer></script>
-  <script src="/preload-sync.js?v=20261008-4" defer></script>
-  <script src="/core.js" defer></script>
-  <script src="/views-market.js" defer></script>
-  <script src="/views-planning.js" defer></script>
-  <script src="/patches.js" defer></script>
-  <script src="/imports-data-aug.js?v=20261008-1" defer></script>
-  <script src="/runtime.js" defer></script>
-  <script src="/fresh-context.js?v=20261008-1" defer></script>
-  <script src="/imports-analysis-v2.js?v=20261008-3" defer></script>
-  <script src="/story.js" defer></script>
-  <script src="/master.js?v=20261008-4" defer></script>
-  <script src="/imports-structure-core.js?v=20261008-1" defer></script>
-  <script src="/ui-mode.js" defer></script>
-  <script src="/segment-trends.js?v=20261008-1" defer></script>
-  <script src="/operational-report.js?v=20261008-1" defer></script>
-  <script src="/public/data/model-segments-v23.js?v=20261008-1" defer></script>
-  <script src="/public/data/pivot-l12m-v24-part1.js?v=20261008-1" defer></script>
-  <script src="/public/data/pivot-l12m-v24-part2.js?v=20261008-1" defer></script>
-  <script src="/public/data/pivot-l12m-v24-part3.js?v=20261008-1" defer></script>
-  <script src="/segment-model-evolution.js?v=20261008-1" defer></script>
-  <script src="/report-order.js?v=20261008-4" defer></script>
-  <script src="/nav-live-v2.js?v=20261008-4" defer></script>
-  <script src="/data-hub-bridge.js?v=20261008-1" defer></script>
+  <script src="/auth-gate.js?v=20261008-3" defer></script>
+  <script src="/auth-fetch.js?v=20261008-2" defer></script>
+  <script src="/preload-sync.js?v=20261008-5" defer></script>
+  <script src="/core.js?v=20261008-5" defer></script>
+  <script src="/views-market.js?v=20261008-5" defer></script>
+  <script src="/views-planning.js?v=20261008-5" defer></script>
+  <script src="/patches.js?v=20261008-5" defer></script>
+  <script src="/imports-data-aug.js?v=20261008-5" defer></script>
+  <script src="/runtime.js?v=20261008-5" defer></script>
+  <script src="/fresh-context.js?v=20261008-2" defer></script>
+  <script src="/imports-analysis-v2.js?v=20261008-5" defer></script>
+  <script src="/story.js?v=20261008-5" defer></script>
+  <script src="/master.js?v=20261008-5" defer></script>
+  <script src="/imports-structure-core.js?v=20261008-5" defer></script>
+  <script src="/ui-mode.js?v=20261008-5" defer></script>
+  <script src="/segment-trends.js?v=20261008-5" defer></script>
+  <script src="/operational-report.js?v=20261008-5" defer></script>
+  <script src="/public/data/model-segments-v23.js?v=20261008-5" defer></script>
+  <script src="/public/data/pivot-l12m-v24-part1.js?v=20261008-5" defer></script>
+  <script src="/public/data/pivot-l12m-v24-part2.js?v=20261008-5" defer></script>
+  <script src="/public/data/pivot-l12m-v24-part3.js?v=20261008-5" defer></script>
+  <script src="/segment-model-evolution.js?v=20261008-5" defer></script>
+  <script src="/report-order.js?v=20261008-5" defer></script>
+  <script src="/nav-live-v2.js?v=20261008-5" defer></script>
+  <script src="/data-hub-bridge.js?v=20261008-5" defer></script>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
-  <script src="/data-hub.js?v=20261008-2" defer></script>
-  <script src="/data-live.js?v=20261008-4" defer></script>
-  <script src="/imports-single-report.js?v=20261008-1" defer></script>
-  <script src="/role-guard.js?v=20261008-2" defer></script>
-  <script src="/user-admin-ui.js?v=20261008-1" defer></script>
+  <script src="/data-hub.js?v=20261008-5" defer></script>
+  <script src="/data-live.js?v=20261008-5" defer></script>
+  <script src="/imports-single-report.js?v=20261008-5" defer></script>
+  <script src="/role-guard.js?v=20261008-5" defer></script>
+  <script src="/user-admin-ui.js?v=20261008-2" defer></script>
 </body>
 </html>
