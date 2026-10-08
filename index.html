@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/modules.css">
   <link rel="stylesheet" href="/story.css">
   <link rel="stylesheet" href="/master.css">
+  <link rel="stylesheet" href="/ui-mode.css">
 </head>
 <body>
   <div class="loading" id="loading"><div class="loading-mark">2W</div><p>Preparando reporte integral…</p><div class="loading-bar"><i></i></div></div>
@@ -23,7 +24,18 @@
       <header class="topbar">
         <button class="menu" id="menu" aria-label="Abrir índice">☰</button>
         <div class="breadcrumbs"><span>2W MARKET ANALYSIS · SINGLE REPORT</span><b id="viewTitle">Reporte integral</b></div>
-        <div class="top-actions"><span class="freshness" id="freshness">ACTUALIZANDO</span><button id="quickReport">▣ Exportar</button><button id="refresh">↻ Actualizar</button></div>
+        <div class="top-actions">
+          <button class="mobile-filter-trigger" id="mobileFilters" aria-label="Abrir filtros" aria-expanded="false">⌘</button>
+          <div class="interface-switch" id="interfaceSwitch" role="group" aria-label="Interfaz">
+            <button type="button" data-ui="auto" title="Automático">Auto</button>
+            <button type="button" data-ui="desktop" title="Desktop / pantalla">Desktop</button>
+            <button type="button" data-ui="mobile" title="Celular">Mobile</button>
+          </div>
+          <span class="freshness" id="freshness">ACTUALIZANDO</span>
+          <button id="quickReport">▣ Exportar</button>
+          <button id="refresh">↻ Actualizar</button>
+          <button class="screen-mode" id="screenMode" aria-label="Modo presentación" aria-pressed="false" title="Modo presentación">⛶</button>
+        </div>
       </header>
       <section class="filters" aria-label="Filtros globales">
         <label><span>PERÍODO</span><select id="periodFilter"><option value="24">Últimos 24 meses</option><option value="48">Últimos 48 meses</option><option value="84">Últimos 7 años</option><option value="all">Histórico completo</option></select></label>
@@ -36,6 +48,8 @@
       <footer><span id="footerMeta"></span><span>CAFAM gobierna total · Pivot/AUTOMATIC estructura · Importaciones ≠ patentamientos</span></footer>
     </div>
   </div>
+  <div class="filter-scrim" id="filterScrim" aria-hidden="true"></div>
+  <nav class="mobile-dock" id="mobileDock" aria-label="Navegación móvil"></nav>
   <div class="tooltip" id="tooltip" hidden></div>
   <script src="/core.js" defer></script>
   <script src="/views-market.js" defer></script>
@@ -44,5 +58,6 @@
   <script src="/runtime.js" defer></script>
   <script src="/story.js" defer></script>
   <script src="/master.js" defer></script>
+  <script src="/ui-mode.js" defer></script>
 </body>
 </html>
