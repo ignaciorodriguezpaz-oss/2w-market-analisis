@@ -1,5 +1,5 @@
 (()=>{
-const FLOW=['executive','context','consumer','market','structure','forecast','user','planning','actions','method'];
+const FLOW=['executive','context','market','structure','consumer','forecast','user','planning','actions','method'];
 let raf=0,current='';
 const nav=()=>document.getElementById('navigation');
 const btn=id=>nav()?.querySelector(`[data-anchor="${id}"]`);
