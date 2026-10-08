@@ -1,0 +1,10 @@
+/* v57 · the only visual active state for the report index */
+#navigation [data-anchor]{position:relative;opacity:.78!important;transform:none!important;box-shadow:none!important}
+#navigation [data-anchor]:not([data-scroll-current="true"]){background:transparent!important;border-color:transparent!important}
+#navigation [data-anchor]:not([data-scroll-current="true"]) i{background:transparent!important;color:inherit!important;box-shadow:none!important}
+#navigation [data-anchor]:not([data-scroll-current="true"]) span{color:inherit!important;font-weight:700!important}
+#navigation [data-anchor][data-scroll-current="true"]{opacity:1!important;background:linear-gradient(90deg,#e0182d 0 4px,rgba(255,255,255,.20) 4px 100%)!important;color:#fff!important;border-color:rgba(255,255,255,.20)!important;box-shadow:0 8px 22px rgba(27,54,74,.20)!important;transform:translateX(2px)!important}
+#navigation [data-anchor][data-scroll-current="true"] i{display:grid!important;place-items:center!important;width:24px!important;height:22px!important;border-radius:7px!important;background:#e0182d!important;color:#fff!important;box-shadow:0 4px 12px rgba(224,24,45,.24)!important}
+#navigation [data-anchor][data-scroll-current="true"] span{color:#fff!important;font-weight:950!important}
+#navigation [data-anchor]:not([data-scroll-current="true"]):hover{opacity:1!important;background:rgba(255,255,255,.07)!important}
+@media(max-width:760px){#navigation [data-anchor][data-scroll-current="true"]{transform:none!important;background:linear-gradient(90deg,#e0182d 0 4px,rgba(255,255,255,.17) 4px 100%)!important}}
