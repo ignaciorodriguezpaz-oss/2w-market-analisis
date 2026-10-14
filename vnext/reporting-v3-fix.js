@@ -1,0 +1,4 @@
+(()=>{
+function fix(){if(document.getElementById('reportType')?.value!=='Monthly')return;const report=document.querySelector('.detailed-report[data-v3="Monthly"]');if(!report)return;for(const sec of report.querySelectorAll(':scope > section')){const title=sec.querySelector('h3')?.textContent?.trim();if(!['Brands & Honda','Top 15 models'].includes(title))continue;sec.querySelectorAll('tbody tr').forEach((tr,i)=>{const td=tr.querySelector('td');if(td)td.textContent=String(i+1)})}}
+const obs=new MutationObserver(()=>queueMicrotask(fix));function start(){const v=document.getElementById('view');if(v)obs.observe(v,{childList:true,subtree:true});fix()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
