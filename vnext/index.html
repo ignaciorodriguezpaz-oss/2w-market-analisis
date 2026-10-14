@@ -1,2 +1,27 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2W Market Analysis · VNext</title><link rel="stylesheet" href="./vnext.css"></head><body><div class="shell"><aside class="side"><div class="brand"><b>2W</b><span>MARKET ANALYSIS</span><small>ARGENTINA · VNEXT</small></div><nav id="nav"></nav><div class="source">CAFAM · MASTER PIVOT · IMPORTS<br><b>Governed Intelligence</b></div></aside><div class="work"><header class="top"><div><small>ARGENTINA MOTORCYCLE INTELLIGENCE</small><h1 id="pageTitle">Executive</h1></div><div class="status"><i></i> LIVE ENGINE</div></header><section class="filters"><label>CALENDAR<select id="calendar"><option>KI</option><option>CY</option></select></label><label>PERIOD<select id="period"><option>KI26/27</option><option>KI27/28</option><option>KI28/29</option></select></label><label>SCENARIO<select id="scenario"><option value="base">Base</option><option value="down">Down</option><option value="up">Up</option><option value="user">User</option></select></label><label>SEGMENT<select><option>Total Market</option><option>CUB</option><option>LMC</option><option>SC</option><option>FUN</option><option>ATV</option></select></label><label>BRAND<select><option>All Brands</option><option>Honda</option></select></label></section><main id="view"></main></div></div><script src="./data.js"></script><script src="./engine.js"></script><script src="./vnext.js"></script></body></html>
+<html lang="es" class="auth-locked">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f4f6f8">
+<title>2W Market Analysis · VNext</title>
+<link rel="stylesheet" href="/auth.css"><link rel="stylesheet" href="./vnext.css">
+</head>
+<body>
+<div id="authShell" class="auth-shell" role="dialog" aria-modal="true" aria-label="Acceso protegido"><section class="auth-card"><div class="auth-brand"><span>2W</span><div><b>ARGENTINA</b><small>MARKET ANALYSIS · VNEXT</small></div></div><h1>Verificando acceso…</h1><p>La aplicación permanece bloqueada hasta validar usuario y permisos.</p><div class="auth-wait"><i></i></div></section></div>
+<div class="shell">
+<aside class="side"><div class="brand"><b>2W</b><span>MARKET ANALYSIS</span><small>ARGENTINA · VNEXT</small></div><nav id="nav"></nav><div class="source">CAFAM · MASTER PIVOT · IMPORTS<br><b>Governed Intelligence</b></div></aside>
+<div class="work"><header class="top"><div><small>ARGENTINA MOTORCYCLE INTELLIGENCE</small><h1 id="pageTitle">Executive</h1></div><div class="top-right"><span class="freshness" id="freshness">Cargando fuentes…</span><button id="refresh" type="button">↻ Actualizar</button><button id="logout" type="button">Salir</button><div class="status"><i></i> LIVE ENGINE</div></div></header>
+<section class="filters" aria-label="Filtros globales">
+<label>CALENDAR<select id="calendar"><option value="KI">KI · Abr–Mar</option><option value="CY">CY · Ene–Dic</option></select></label>
+<label>PERIOD<select id="period"><option>KI26/27</option><option>KI27/28</option><option>KI28/29</option><option>KI29/30</option><option>KI30/31</option></select></label>
+<label>SCENARIO<select id="scenario"><option value="base">Base</option><option value="down">Down</option><option value="up">Up</option><option value="user">User</option></select></label>
+<label class="wide">SEGMENT 1<select id="segment1Filter"><option value="TOTAL">Segmento 1 · Total</option></select></label>
+<label class="wide">SEGMENT 2<select id="segment2Filter"><option value="TOTAL">Segmento 2 · Total</option></select></label>
+<label class="wide">BRAND<select id="brandFilter"><option value="ALL">All Brands</option></select></label>
+<label class="wide">GROUP<select id="groupFilter"><option value="ALL">All Groups</option></select></label>
+<label class="wide">MODEL<select id="modelFilter"><option value="ALL">All Models</option></select></label>
+</section><main id="view" tabindex="-1"></main></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="/auth-gate.js" defer></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
+<script src="./history.js" defer></script><script src="./data.js" defer></script><script src="./engine.js" defer></script><script src="./live.js" defer></script><script src="./upload.js" defer></script><script src="./vnext.js" defer></script>
+</body></html>
