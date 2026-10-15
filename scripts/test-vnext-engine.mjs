@@ -20,4 +20,21 @@ for(const scenario of ['down','base','up']){assert.equal(M.multiKI[scenario].len
 const target=900000,req=E.requiredPath(target,'KI26/27');assert.equal(req.actualLocked+req.path.reduce((s,x)=>s+x.value,0),target,'Target required path reconciles');
 assert.ok(M.backtest.n>12,'backtest has meaningful sample');assert.ok(Number.isFinite(M.backtest.wape)&&M.backtest.wape>=0,'backtest WAPE finite');assert.match(M.backtest.scope,/Strict walk-forward/i,'backtest explicitly strict walk-forward');
 const tm=E.timeMachine('2024-09',6);assert.equal(tm.rows.length,6,'Time Machine horizon');assert.ok(tm.rows.every(x=>x.knownThrough==='2024-09'),'Time Machine knowledge cutoff frozen');assert.ok(tm.rows.every(x=>x.seasonalityN>0),'Time Machine seasonality estimated from prior years');
-console.log(JSON.stringify({ok:true,open:{mtd:M.open.mtd,base:M.open.base,down:M.open.down,up:M.open.up},ki:{actual:M.ki.actual,down:M.ki.down,base:M.ki.base,up:M.ki.up},cy:M.cy,backtest:{n:M.backtest.n,wape:M.backtest.wape,mape:M.backtest.mape,bias:M.backtest.bias},timeMachine:tm.rows.map(x=>({key:x.key,base:x.base,actual:x.actual,ape:x.ape}))},null,2));
+const horizonStats=[];
+for(const horizon of [1,3,6]){
+  let n=0,absErr=0,actualTotal=0,signedErr=0,directional=0;
+  const cutoffs=(globalThis.VNEXT_HISTORY?.rows||[]).map(x=>x[0]).filter(k=>k>='2021-12'&&k<='2026-03');
+  for(const asOf of cutoffs){
+    const run=E.timeMachine(asOf,horizon),row=run.rows[horizon-1],origin=Number(E.marketValue(asOf));
+    if(!row?.actual||!(origin>0))continue;
+    const error=row.base-row.actual;n++;absErr+=Math.abs(error);actualTotal+=row.actual;signedErr+=error;
+    if(Math.sign(row.actual-origin)===Math.sign(row.base-origin))directional++;
+  }
+  assert.ok(n>8,`${horizon}M validation has enough samples`);
+  const wape=absErr/actualTotal,bias=signedErr/actualTotal,dir=directional/n;
+  assert.ok(Number.isFinite(wape)&&wape>=0,`${horizon}M WAPE finite`);
+  assert.ok(Number.isFinite(bias),`${horizon}M bias finite`);
+  assert.ok(Number.isFinite(dir)&&dir>=0&&dir<=1,`${horizon}M directional accuracy bounded`);
+  horizonStats.push({horizon,n,wape,bias,directional:dir});
+}
+console.log(JSON.stringify({ok:true,open:{mtd:M.open.mtd,base:M.open.base,down:M.open.down,up:M.open.up},ki:{actual:M.ki.actual,down:M.ki.down,base:M.ki.base,up:M.ki.up},cy:M.cy,backtest:{n:M.backtest.n,wape:M.backtest.wape,mape:M.backtest.mape,bias:M.backtest.bias},multiHorizon:horizonStats,timeMachine:tm.rows.map(x=>({key:x.key,base:x.base,actual:x.actual,ape:x.ape}))},null,2));
