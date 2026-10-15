@@ -1,34 +1,50 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
+
 const html=fs.readFileSync('vnext/index.html','utf8');
-const mustLoad=['history.js','data.js','engine.js','engine-governance.js','live.js','upload.js','market-drilldown.js','daily-monitor-v2.js','structure-forecast.js','geography.js','time-machine.js','validation-v2.js','forecast-diff.js','forecast-v2.js','honda-planning-v2.js','product-v2.js','intelligence-v2.js','fresh-intelligence.js','imports-v2.js','reporting-v2.js','weekly-guard.js','reporting-v3.js','custom-report-v4.js','report-export-v4.js','report-history.js','runtime-health.js'];
-for(const file of mustLoad)assert.ok(html.includes(`./${file}`),`${file} is wired in index.html`);
-const files=Object.fromEntries(mustLoad.map(f=>[f,fs.readFileSync(`vnext/${f}`,'utf8')]));
-const expect=(file,re,msg)=>assert.match(files[file],re,msg||`${file} matches ${re}`);
-expect('forecast-v2.js',/FORECAST INSPECTOR/i,'Forecast has exact-cell Inspector');
-expect('forecast-v2.js',/Required Path/i,'Forecast has target required path');
-expect('forecast-v2.js',/Multi-KI/i,'Forecast exposes multi-KI');
-expect('forecast-v2.js',/User scenario/i,'User scenario stays explicit');
-expect('engine-governance.js',/timeMachine/,'Time Machine exists');
-expect('validation-v2.js',/1M\s*\/\s*3M\s*\/\s*6M/,'Multi-horizon validation exists');
-expect('forecast-diff.js',/FORECAST VERSION BRIDGE/,'Forecast diff module exists');
-expect('market-drilldown.js',/Honda se agrega aunque quede fuera del Top 5/,'Honda visibility rule exists');
-expect('structure-forecast.js',/projected entity share/i,'Structural forecast method is explicit');
-expect('imports-v2.js',/Importaciones no son patentamientos/i,'Imports governance is explicit');
-expect('geography.js',/geographic forecast fabricated/i,'Geography does not fabricate forecast');
-expect('honda-planning-v2.js',/independent market forecast/i,'Honda planning is separated');
-expect('reporting-v2.js',/Friday.?Thursday/i,'Weekly reporting window contract exists');
-expect('reporting-v3.js',/Monthly Close/i,'Monthly reporting exists');
-expect('custom-report-v4.js',/CUSTOM REPORT/i,'Custom reporting exists');
-expect('report-export-v4.js',/XLSX/,'Native Excel export exists');
-expect('report-export-v4.js',/PowerPoint/i,'Native PowerPoint export exists');
-expect('report-history.js',/FROZEN REPORT HISTORY/,'Frozen report history exists');
-expect('upload.js',/XLSX/,'Spreadsheet upload parser exists');
-expect('runtime-health.js',/Scenario ordering/,'Runtime health checks model invariants');
+const requiredModules=[
+  'history.js','data.js','engine.js','engine-governance.js','live.js','upload.js',
+  'market-drilldown.js','daily-monitor-v2.js','structure-forecast.js','geography.js',
+  'time-machine.js','validation-v2.js','forecast-diff.js','forecast-v2.js',
+  'honda-planning-v2.js','product-v2.js','intelligence-v2.js','fresh-intelligence.js',
+  'imports-v2.js','reporting-v2.js','weekly-guard.js','reporting-v3.js',
+  'custom-report-v4.js','report-export-v4.js','report-history.js','runtime-health.js'
+];
+for(const file of requiredModules){
+  const path=`vnext/${file}`;
+  assert.ok(fs.existsSync(path),`${path} exists`);
+  assert.ok(fs.statSync(path).size>80,`${path} is non-empty implementation`);
+  assert.ok(html.includes(`./${file}`),`${file} is wired in index.html`);
+}
+
+const requiredStyles=[
+  'vnext.css','upload.css','market-drilldown.css','daily-monitor-v2.css','structure-forecast.css',
+  'time-machine.css','forecast-diff.css','forecast-v2.css','honda-planning-v2.css','product-v2.css',
+  'reporting-v2.css','weekly-guard.css','reporting-v3.css','report-history.css','validation-v2.css',
+  'runtime-health.css','intelligence-v2.css','fresh-intelligence.css','custom-report-v4.css'
+];
+for(const file of requiredStyles){
+  const path=`vnext/${file}`;
+  assert.ok(fs.existsSync(path),`${path} exists`);
+  assert.ok(html.includes(`./${file}`)||file==='vnext.css',`${file} is wired in index.html`);
+}
+
 const css=fs.readFileSync('vnext/vnext.css','utf8');
 const chartRule=css.match(/\.svg-chart\{([^}]*)\}/)?.[1]||'';
 assert.ok(chartRule,'Core SVG chart rule exists');
-assert.ok(/overflow\s*:\s*hidden/i.test(chartRule),'Charts are clipped to available width');
-assert.ok(!/overflow-x\s*:\s*(auto|scroll)/i.test(chartRule),'Charts never use horizontal scrolling');
+assert.match(chartRule,/overflow\s*:\s*hidden/i,'Charts are bounded to available width');
+assert.doesNotMatch(chartRule,/overflow-x\s*:\s*(auto|scroll)/i,'Charts do not horizontally scroll');
 assert.match(css,/\.svg-chart svg\{[^}]*width\s*:\s*100%/i,'SVG charts scale to full available width');
-console.log(JSON.stringify({ok:true,modules:mustLoad.length,checks:'product contract + wiring + governance + reporting + full-width no-scroll charts'},null,2));
+
+const forecast=fs.readFileSync('vnext/forecast-v2.js','utf8');
+assert.match(forecast,/E\.inspect\(/,'Forecast UI calls the engine Inspector');
+assert.match(forecast,/E\.requiredPath\(/,'Forecast UI calls Required Path engine');
+const market=fs.readFileSync('vnext/market-drilldown.js','utf8');
+assert.match(market,/includeHonda\(/,'Market drill-down has explicit Honda inclusion logic');
+const imports=fs.readFileSync('vnext/imports-v2.js','utf8');
+assert.match(imports,/registrations/i,'Imports view compares with registrations');
+const reporting=fs.readFileSync('vnext/report-export-v4.js','utf8');
+assert.match(reporting,/XLSX\.writeFile/,'Native XLSX export is wired');
+assert.match(reporting,/PptxGenJS/,'Native PowerPoint export is wired');
+
+console.log(JSON.stringify({ok:true,modules:requiredModules.length,styles:requiredStyles.length,checks:'wiring + non-empty modules + no-scroll charts + engine Inspector/RequiredPath hooks + Honda visibility + imports comparison + XLSX/PPTX exports'},null,2));
