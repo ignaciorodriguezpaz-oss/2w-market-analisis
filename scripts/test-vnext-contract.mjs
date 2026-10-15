@@ -26,5 +26,9 @@ expect('report-history.js',/FROZEN REPORT HISTORY/,'Frozen report history exists
 expect('upload.js',/XLSX/,'Spreadsheet upload parser exists');
 expect('runtime-health.js',/Scenario ordering/,'Runtime health checks model invariants');
 const css=fs.readFileSync('vnext/vnext.css','utf8');
-assert.ok(!/overflow-x\s*:\s*(auto|scroll)/i.test(css),'Core desktop chart system has no horizontal chart scrolling');
-console.log(JSON.stringify({ok:true,modules:mustLoad.length,checks:'product contract + wiring + governance + reporting + no horizontal core scroll'},null,2));
+const chartRule=css.match(/\.svg-chart\{([^}]*)\}/)?.[1]||'';
+assert.ok(chartRule,'Core SVG chart rule exists');
+assert.ok(/overflow\s*:\s*hidden/i.test(chartRule),'Charts are clipped to available width');
+assert.ok(!/overflow-x\s*:\s*(auto|scroll)/i.test(chartRule),'Charts never use horizontal scrolling');
+assert.match(css,/\.svg-chart svg\{[^}]*width\s*:\s*100%/i,'SVG charts scale to full available width');
+console.log(JSON.stringify({ok:true,modules:mustLoad.length,checks:'product contract + wiring + governance + reporting + full-width no-scroll charts'},null,2));
