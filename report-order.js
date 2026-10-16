@@ -1,5 +1,6 @@
 (()=>{
-const FLOW=[
+const cfg=window.__2W_SITE_MIRROR__||{};
+const fallback=[
   ['executive','Resumen ejecutivo'],
   ['context','Argentina hoy'],
   ['market','Mercado, Daily & estacionalidad'],
@@ -11,6 +12,7 @@ const FLOW=[
   ['actions','Radar, riesgos & acciones'],
   ['method','Metodología, validación & reportes']
 ];
+const FLOW=Array.isArray(cfg.chapters)&&cfg.chapters.length?cfg.chapters:fallback;
 let busy=false,queued=false;
 const nn=i=>String(i+1).padStart(2,'0');
 const navMarkup=()=>FLOW.map(([id,title],i)=>`<button type="button" data-anchor="${id}"><i>${nn(i)}</i><span>${title}</span></button>`).join('');
