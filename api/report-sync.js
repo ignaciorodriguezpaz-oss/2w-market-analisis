@@ -23,7 +23,10 @@ async function handler(req, res) {
     const url = new URL(SITE);
     if (req.method === 'POST') {
       const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-      const response = await fetch(url, { method: 'POST', headers: { ...headers, 'content-type': 'application/json' }, body: JSON.stringify({ kind: body.kind }) });
+      const artifactByFormat = { excel: 'master', pdf: 'pdf', pptx: 'pptx' };
+      if (!artifactByFormat[body.format]) return res.status(400).json({ error: 'Elegí Excel, PDF o PowerPoint.' });
+      const runId = body.runId || require('crypto').randomUUID();
+      const response = await fetch(url, { method: 'POST', headers: { ...headers, 'content-type': 'application/json' }, body: JSON.stringify({ kind: body.kind, runId, artifact: artifactByFormat[body.format], final: true }) });
       const data = await response.json();
       return res.status(response.status).json(data);
     }
