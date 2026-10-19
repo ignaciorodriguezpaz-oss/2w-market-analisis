@@ -13,50 +13,56 @@
   <main class="shell">
     <header class="topline">
       <div class="brand-mark" aria-hidden="true">AMI</div>
-      <div class="brand-text"><b>ARGENTINA MOTORCYCLE INTELLIGENCE</b><span>CENTRO DE REPORTES</span></div>
-      <button class="logout" id="logout" hidden>Salir</button>
+      <div class="brand-text"><b>ARGENTINA MOTORCYCLE INTELLIGENCE</b><span data-i18n="report_center">CENTRO DE REPORTES</span></div>
+      <div class="header-actions">
+        <div class="language-switch" role="group" aria-label="Language / Idioma">
+          <button type="button" class="language-option" data-language="es" aria-label="Español" aria-pressed="true">ES</button>
+          <button type="button" class="language-option" data-language="en" aria-label="English" aria-pressed="false">EN</button>
+        </div>
+        <button class="logout" id="logout" data-i18n="logout" hidden>Salir</button>
+      </div>
     </header>
     <section class="login" id="loginPane">
-      <p class="eyebrow">ACCESO PRIVADO</p>
-      <h1>Ingresá para preparar tus reportes.</h1>
+      <p class="eyebrow" data-i18n="private_access">ACCESO PRIVADO</p>
+      <h1 data-i18n="login_title">Ingresá para preparar tus reportes.</h1>
       <form id="loginForm" class="form">
-        <label>Usuario<input id="username" name="username" autocomplete="username" required></label>
-        <label>Contraseña<input id="password" name="password" type="password" autocomplete="current-password" required></label>
-        <button class="primary" type="submit">Ingresar <span aria-hidden="true">↗</span></button>
+        <label><span data-i18n="username">Usuario</span><input id="username" name="username" autocomplete="username" required></label>
+        <label><span data-i18n="password">Contraseña</span><input id="password" name="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary" type="submit"><span data-i18n="login_button">Ingresar</span><span aria-hidden="true">↗</span></button>
         <p class="message" id="loginMessage" role="status"></p>
       </form>
     </section>
     <section class="app" id="appPane" hidden>
-      <p class="eyebrow">MERCADO ARGENTINO DE MOTOCICLETAS</p>
-      <h1>Actualizá y descargá<br><em>desde acá.</em></h1>
-      <p class="intro">El botón consulta la base vigente del Site y prepara solo el formato que elijas para descargarlo.</p>
+      <p class="eyebrow" data-i18n="market_eyebrow">MERCADO ARGENTINO DE MOTOCICLETAS</p>
+      <h1><span data-i18n="app_title_first">Actualizá y descargá</span><br><em data-i18n="app_title_second">desde acá.</em></h1>
+      <p class="intro" data-i18n="intro">El botón consulta la base vigente del Site y prepara solo el formato que elijas para descargarlo.</p>
       <div class="update-box">
-        <label class="select-label" for="reportKind">Tipo de reporte</label>
+        <label class="select-label" for="reportKind" data-i18n="report_type">Tipo de reporte</label>
         <select id="reportKind">
-          <option value="executive">Executive Committee · 5 slides</option>
-          <option value="monthly">Monthly Review</option>
-          <option value="weekly">Weekly Registration · última semana cerrada</option>
-          <option value="ki">KI Outlook / MTP</option>
-          <option value="commercial">Commercial Planning</option>
-          <option value="supply">Supply & Market Outlook</option>
+          <option value="executive" data-i18n="kind_executive">Executive Committee · 5 slides</option>
+          <option value="monthly" data-i18n="kind_monthly">Monthly Review</option>
+          <option value="weekly" data-i18n="kind_weekly">Weekly Registration · última semana cerrada</option>
+          <option value="ki" data-i18n="kind_ki">KI Outlook / MTP</option>
+          <option value="commercial" data-i18n="kind_commercial">Commercial Planning</option>
+          <option value="supply" data-i18n="kind_supply">Supply & Market Outlook</option>
         </select>
-        <label class="select-label" for="outputFormat">Formato de descarga</label>
+        <label class="select-label" for="outputFormat" data-i18n="download_format">Formato de descarga</label>
         <select id="outputFormat">
-          <option value="excel">Excel completo · base y tablas</option>
-          <option value="pdf">PDF del reporte</option>
-          <option value="pptx">PowerPoint del reporte</option>
+          <option value="excel" data-i18n="format_excel">Excel completo · base y tablas</option>
+          <option value="pdf" data-i18n="format_pdf">PDF del reporte</option>
+          <option value="pptx" data-i18n="format_pptx">PowerPoint del reporte</option>
         </select>
-        <button class="primary update-button" id="updateButton"><span>Actualizar reporte</span><span class="arrow" aria-hidden="true">↗</span></button>
+        <button class="primary update-button" id="updateButton"><span data-i18n="update_report">Actualizar reporte</span><span class="arrow" aria-hidden="true">↗</span></button>
         <p class="message" id="updateMessage" role="status"></p>
       </div>
       <section class="downloads" id="downloads" hidden>
-        <div class="downloads-head"><div><p class="eyebrow">ARCHIVOS LISTOS</p><h2 id="manifestTitle">Reporte actualizado</h2></div><span class="stamp" id="stamp"></span></div>
+        <div class="downloads-head"><div><p class="eyebrow" data-i18n="files_ready">ARCHIVOS LISTOS</p><h2 id="manifestTitle" data-i18n="report_updated">Reporte actualizado</h2></div><span class="stamp" id="stamp"></span></div>
         <p class="cutoff" id="cutoff"></p>
         <div class="file-list" id="fileList"></div>
       </section>
-      <p class="privacy-note"><span>●</span> Datos leídos del Site · los archivos quedan disponibles acá hasta la próxima actualización.</p>
+      <p class="privacy-note"><span>●</span> <span data-i18n="privacy_note">Datos leídos del Site · los archivos quedan disponibles acá hasta la próxima actualización.</span></p>
     </section>
-    <footer><span>ARGENTINA MOTORCYCLE INTELLIGENCE</span><span>Descargas fechadas · fuente única: Site</span></footer>
+    <footer><span>ARGENTINA MOTORCYCLE INTELLIGENCE</span><span data-i18n="footer_note">Descargas fechadas · fuente única: Site</span></footer>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/portal.js" defer></script>
