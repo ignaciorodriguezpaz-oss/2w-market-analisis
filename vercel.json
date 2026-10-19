@@ -3,7 +3,8 @@
   "trailingSlash": false,
   "functions": {
     "api/report-sync.js": {"maxDuration": 60},
-    "api/report-download.js": {"maxDuration": 60}
+    "api/report-download.js": {"maxDuration": 60},
+    "api/report-bundle.js": {"maxDuration": 60}
   },
   "headers": [
     {

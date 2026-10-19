@@ -40,7 +40,7 @@
         try {
           const response = await request(`/api/report-download?runId=${encodeURIComponent(manifest.runId)}&fileId=${encodeURIComponent(file.id)}`);
           const blob = await response.blob(), link = document.createElement('a');
-          link.href = URL.createObjectURL(blob); link.download = file.filename; link.click(); URL.revokeObjectURL(link.href);
+          link.href = URL.createObjectURL(blob); link.download = file.filename; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(link.href), 2000);
         } catch (error) { setMessage(updateMessage, error.message, true); }
         finally { button.disabled = false; button.textContent = 'Descargar'; }
       });
@@ -66,7 +66,13 @@
     setMessage(updateMessage, 'Consultando el Site y generando Excel, PDF y PowerPoint…');
     try {
       const response = await request('/api/report-sync', { method: 'POST', body: JSON.stringify({ kind: $('reportKind').value }) });
-      renderManifest(await response.json()); setMessage(updateMessage, 'Listo: los archivos se descargan desde esta app.');
+      const manifest = await response.json();
+      renderManifest(manifest);
+      setMessage(updateMessage, 'Armando ZIP para descargar…');
+      const bundle = await request(`/api/report-bundle?runId=${encodeURIComponent(manifest.runId)}`);
+      const blob = await bundle.blob(), link = document.createElement('a');
+      link.href = URL.createObjectURL(blob); link.download = `AMI_reportes_${manifest.date || 'actualizados'}.zip`; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(link.href), 3000);
+      setMessage(updateMessage, 'Listo: descargué un ZIP con todos los archivos. También podés bajar cada uno por separado.');
     } catch (error) { setMessage(updateMessage, error.message, true); }
     finally { button.disabled = false; }
   });
