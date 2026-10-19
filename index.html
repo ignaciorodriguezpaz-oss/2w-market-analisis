@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#152f43">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="Acceso directo a los reportes actualizados de Argentina Motorcycle Intelligence.">
+  <meta name="description" content="Actualizá y descargá los reportes de Argentina Motorcycle Intelligence.">
   <title>Reportes · Argentina Motorcycle Intelligence</title>
   <link rel="stylesheet" href="/reportes.css">
 </head>
@@ -14,24 +14,45 @@
     <header class="topline">
       <div class="brand-mark" aria-hidden="true">AMI</div>
       <div class="brand-text"><b>ARGENTINA MOTORCYCLE INTELLIGENCE</b><span>CENTRO DE REPORTES</span></div>
-      <span class="live"><i></i> SITE COMO FUENTE MAESTRA</span>
+      <button class="logout" id="logout" hidden>Salir</button>
     </header>
-    <section class="hero" aria-labelledby="title">
+    <section class="login" id="loginPane">
+      <p class="eyebrow">ACCESO PRIVADO</p>
+      <h1>Ingresá para preparar tus reportes.</h1>
+      <form id="loginForm" class="form">
+        <label>Usuario<input id="username" name="username" autocomplete="username" required></label>
+        <label>Contraseña<input id="password" name="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary" type="submit">Ingresar <span aria-hidden="true">↗</span></button>
+        <p class="message" id="loginMessage" role="status"></p>
+      </form>
+    </section>
+    <section class="app" id="appPane" hidden>
       <p class="eyebrow">MERCADO ARGENTINO DE MOTOCICLETAS</p>
-      <h1 id="title">Descargá los reportes<br><em>con los datos vigentes.</em></h1>
-      <p class="intro">La información y los reportes se actualizan desde el Site. Abrí el centro de reportes para generar y descargar el Excel maestro, Excel de análisis, PDF o PowerPoint con la fecha de descarga.</p>
-      <a class="primary" href="https://argentina-motorcycle-intelligence.proudgull17.chatgpt.site/#reports" target="_top" rel="noreferrer">
-        <span>Abrir reportes actualizados</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-      </a>
-      <div class="footnote"><span class="lock" aria-hidden="true">●</span> El acceso y los datos siguen protegidos por el Site.</div>
+      <h1>Actualizá y descargá<br><em>desde acá.</em></h1>
+      <p class="intro">El botón consulta la base vigente del Site, genera el Excel maestro y los archivos del reporte elegido. Después podés descargarlos desde esta pantalla.</p>
+      <div class="update-box">
+        <label class="select-label" for="reportKind">Tipo de reporte</label>
+        <select id="reportKind">
+          <option value="executive">Executive Committee · 5 slides</option>
+          <option value="monthly">Monthly Review</option>
+          <option value="weekly">Weekly Registration · última semana cerrada</option>
+          <option value="ki">KI Outlook / MTP</option>
+          <option value="commercial">Commercial Planning</option>
+          <option value="supply">Supply & Market Outlook</option>
+        </select>
+        <button class="primary update-button" id="updateButton"><span>Actualizar reporte</span><span class="arrow" aria-hidden="true">↗</span></button>
+        <p class="message" id="updateMessage" role="status"></p>
+      </div>
+      <section class="downloads" id="downloads" hidden>
+        <div class="downloads-head"><div><p class="eyebrow">ARCHIVOS LISTOS</p><h2 id="manifestTitle">Reporte actualizado</h2></div><span class="stamp" id="stamp"></span></div>
+        <p class="cutoff" id="cutoff"></p>
+        <div class="file-list" id="fileList"></div>
+      </section>
+      <p class="privacy-note"><span>●</span> Datos leídos del Site · los archivos quedan disponibles acá hasta la próxima actualización.</p>
     </section>
-    <section class="details" aria-label="Cómo funciona">
-      <article><span class="step">01</span><div><b>Una sola base</b><p>El Site mantiene la información, cargas y análisis.</p></div></article>
-      <article><span class="step">02</span><div><b>Reportes al día</b><p>Al abrir reportes, el Site usa su información más reciente.</p></div></article>
-      <article><span class="step">03</span><div><b>Descarga fechada</b><p>Los archivos se generan con la fecha para comparar seguimientos.</p></div></article>
-    </section>
-    <footer><span>ARGENTINA MOTORCYCLE INTELLIGENCE</span><span>Portal de descarga · los datos viven en el Site</span></footer>
+    <footer><span>ARGENTINA MOTORCYCLE INTELLIGENCE</span><span>Descargas fechadas · fuente única: Site</span></footer>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/portal.js" defer></script>
 </body>
 </html>
